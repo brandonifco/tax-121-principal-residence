@@ -281,8 +281,8 @@ internal static partial class Handlers
     /// <summary>Suspension of the 5-year period for extended duty (<c>uniformed-services-suspension-absent</c>): optional.</summary>
     static partial void UniformedServicesSuspensionAbsent(global::Tax121PrincipalResidence.Requests.UniformedServicesSuspensionAbsentRequest request, ref Resolution<object>? resolution);
 
-    /// <summary>Use means occupancy (<c>use-requires-occupancy</c>): optional.</summary>
-    static partial void UseRequiresOccupancy(global::Tax121PrincipalResidence.Requests.UseRequiresOccupancyRequest request, ref Resolution<object>? resolution);
+    /// <summary>Use means occupancy (<c>use-requires-occupancy</c>): required, the entry is implemented.</summary>
+    internal static partial Resolution<object> UseRequiresOccupancy(global::Tax121PrincipalResidence.Requests.UseRequiresOccupancyRequest request);
 
     /// <summary>Short temporary absences count as use (<c>short-temporary-absences</c>): optional.</summary>
     static partial void ShortTemporaryAbsences(global::Tax121PrincipalResidence.Requests.ShortTemporaryAbsencesRequest request, ref Resolution<object>? resolution);
@@ -406,7 +406,7 @@ internal static partial class Handlers
                 UniformedServicesSuspensionAbsent(request as global::Tax121PrincipalResidence.Requests.UniformedServicesSuspensionAbsentRequest ?? new(assertions), ref resolution);
                 break;
             case "use-requires-occupancy":
-                UseRequiresOccupancy(request as global::Tax121PrincipalResidence.Requests.UseRequiresOccupancyRequest ?? new(assertions), ref resolution);
+                resolution = UseRequiresOccupancy(request as global::Tax121PrincipalResidence.Requests.UseRequiresOccupancyRequest ?? new(assertions));
                 break;
             case "short-temporary-absences":
                 ShortTemporaryAbsences(request as global::Tax121PrincipalResidence.Requests.ShortTemporaryAbsencesRequest ?? new(assertions), ref resolution);
@@ -486,7 +486,7 @@ internal static partial class Handlers
         "ownership-and-use-aggregation" => true,
         "ownership-and-use-nonconcurrent" => Hooked("OwnershipAndUseNonconcurrent", typeof(global::Tax121PrincipalResidence.Requests.OwnershipAndUseNonconcurrentRequest)),
         "uniformed-services-suspension-absent" => Hooked("UniformedServicesSuspensionAbsent", typeof(global::Tax121PrincipalResidence.Requests.UniformedServicesSuspensionAbsentRequest)),
-        "use-requires-occupancy" => Hooked("UseRequiresOccupancy", typeof(global::Tax121PrincipalResidence.Requests.UseRequiresOccupancyRequest)),
+        "use-requires-occupancy" => true,
         "short-temporary-absences" => Hooked("ShortTemporaryAbsences", typeof(global::Tax121PrincipalResidence.Requests.ShortTemporaryAbsencesRequest)),
         "out-of-residence-care" => Hooked("OutOfResidenceCare", typeof(global::Tax121PrincipalResidence.Requests.OutOfResidenceCareRequest)),
         "ownership-through-trust" => Hooked("OwnershipThroughTrust", typeof(global::Tax121PrincipalResidence.Requests.OwnershipThroughTrustRequest)),
