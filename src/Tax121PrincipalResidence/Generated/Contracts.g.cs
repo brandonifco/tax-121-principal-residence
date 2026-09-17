@@ -224,11 +224,11 @@ internal static partial class Handlers
     /// <summary>Owned and used as a principal residence for 2 of the 5 years ending on the sale (<c>ownership-and-use-test</c>): optional.</summary>
     static partial void OwnershipAndUseTest(global::Tax121PrincipalResidence.Requests.OwnershipAndUseTestRequest request, ref Resolution<object>? resolution);
 
-    /// <summary>Whether property is used as a residence (<c>residence-facts-and-circumstances</c>): optional.</summary>
-    static partial void ResidenceFactsAndCircumstances(global::Tax121PrincipalResidence.Requests.ResidenceFactsAndCircumstancesRequest request, ref Resolution<object>? resolution);
+    /// <summary>Whether property is used as a residence (<c>residence-facts-and-circumstances</c>): required, the entry is implemented.</summary>
+    internal static partial Resolution<object> ResidenceFactsAndCircumstances(global::Tax121PrincipalResidence.Requests.ResidenceFactsAndCircumstancesRequest request);
 
-    /// <summary>Property that may be a residence (<c>residence-may-include</c>): optional.</summary>
-    static partial void ResidenceMayInclude(global::Tax121PrincipalResidence.Requests.ResidenceMayIncludeRequest request, ref Resolution<object>? resolution);
+    /// <summary>Property that may be a residence (<c>residence-may-include</c>): required, the entry is implemented.</summary>
+    internal static partial Resolution<object> ResidenceMayInclude(global::Tax121PrincipalResidence.Requests.ResidenceMayIncludeRequest request);
 
     /// <summary>A co-operative apartment as a residence (<c>residence-cooperative-apartment</c>): optional.</summary>
     static partial void ResidenceCooperativeApartment(global::Tax121PrincipalResidence.Requests.ResidenceCooperativeApartmentRequest request, ref Resolution<object>? resolution);
@@ -242,8 +242,8 @@ internal static partial class Handlers
     /// <summary>The majority-of-time default for two alternating properties (<c>principal-residence-majority-of-time</c>): optional.</summary>
     static partial void PrincipalResidenceMajorityOfTime(global::Tax121PrincipalResidence.Requests.PrincipalResidenceMajorityOfTimeRequest request, ref Resolution<object>? resolution);
 
-    /// <summary>The six relevant factors (<c>principal-residence-factors</c>): optional.</summary>
-    static partial void PrincipalResidenceFactors(global::Tax121PrincipalResidence.Requests.PrincipalResidenceFactorsRequest request, ref Resolution<object>? resolution);
+    /// <summary>The six relevant factors (<c>principal-residence-factors</c>): required, the entry is implemented.</summary>
+    internal static partial Resolution<object> PrincipalResidenceFactors(global::Tax121PrincipalResidence.Requests.PrincipalResidenceFactorsRequest request);
 
     /// <summary>When vacant land is sold as a principal residence (<c>vacant-land-not-principal-residence</c>): optional.</summary>
     static partial void VacantLandNotPrincipalResidence(global::Tax121PrincipalResidence.Requests.VacantLandNotPrincipalResidenceRequest request, ref Resolution<object>? resolution);
@@ -251,8 +251,8 @@ internal static partial class Handlers
     /// <summary>Vacant land and the dwelling unit are one sale (<c>vacant-land-single-sale</c>): optional.</summary>
     static partial void VacantLandSingleSale(global::Tax121PrincipalResidence.Requests.VacantLandSingleSaleRequest request, ref Resolution<object>? resolution);
 
-    /// <summary>The maximum limitation amount for a combined sale (<c>maximum-limitation-amount</c>): optional.</summary>
-    static partial void MaximumLimitationAmount(global::Tax121PrincipalResidence.Requests.MaximumLimitationAmountRequest request, ref Resolution<object>? resolution);
+    /// <summary>The maximum limitation amount for a combined sale (<c>maximum-limitation-amount</c>): required, the entry is implemented.</summary>
+    internal static partial Resolution<object> MaximumLimitationAmount(global::Tax121PrincipalResidence.Requests.MaximumLimitationAmountRequest request);
 
     /// <summary>Ordering the exclusion across taxable years (<c>vacant-land-ordering-across-years</c>): optional.</summary>
     static partial void VacantLandOrderingAcrossYears(global::Tax121PrincipalResidence.Requests.VacantLandOrderingAcrossYearsRequest request, ref Resolution<object>? resolution);
@@ -272,8 +272,8 @@ internal static partial class Handlers
     /// <summary>A loss on one of two combined transactions and the excludable gain (<c>combined-sale-nets-dwelling-loss</c>): optional.</summary>
     static partial void CombinedSaleNetsDwellingLoss(global::Tax121PrincipalResidence.Requests.CombinedSaleNetsDwellingLossRequest request, ref Resolution<object>? resolution);
 
-    /// <summary>Two years as 24 months or 730 days (<c>ownership-and-use-aggregation</c>): optional.</summary>
-    static partial void OwnershipAndUseAggregation(global::Tax121PrincipalResidence.Requests.OwnershipAndUseAggregationRequest request, ref Resolution<object>? resolution);
+    /// <summary>Two years as 24 months or 730 days (<c>ownership-and-use-aggregation</c>): required, the entry is implemented.</summary>
+    internal static partial Resolution<object> OwnershipAndUseAggregation(global::Tax121PrincipalResidence.Requests.OwnershipAndUseAggregationRequest request);
 
     /// <summary>Ownership and use need not be concurrent (<c>ownership-and-use-nonconcurrent</c>): optional.</summary>
     static partial void OwnershipAndUseNonconcurrent(global::Tax121PrincipalResidence.Requests.OwnershipAndUseNonconcurrentRequest request, ref Resolution<object>? resolution);
@@ -349,10 +349,10 @@ internal static partial class Handlers
                 OwnershipAndUseTest(request as global::Tax121PrincipalResidence.Requests.OwnershipAndUseTestRequest ?? new(assertions), ref resolution);
                 break;
             case "residence-facts-and-circumstances":
-                ResidenceFactsAndCircumstances(request as global::Tax121PrincipalResidence.Requests.ResidenceFactsAndCircumstancesRequest ?? new(assertions), ref resolution);
+                resolution = ResidenceFactsAndCircumstances(request as global::Tax121PrincipalResidence.Requests.ResidenceFactsAndCircumstancesRequest ?? new(assertions));
                 break;
             case "residence-may-include":
-                ResidenceMayInclude(request as global::Tax121PrincipalResidence.Requests.ResidenceMayIncludeRequest ?? new(assertions), ref resolution);
+                resolution = ResidenceMayInclude(request as global::Tax121PrincipalResidence.Requests.ResidenceMayIncludeRequest ?? new(assertions));
                 break;
             case "residence-cooperative-apartment":
                 ResidenceCooperativeApartment(request as global::Tax121PrincipalResidence.Requests.ResidenceCooperativeApartmentRequest ?? new(assertions), ref resolution);
@@ -367,7 +367,7 @@ internal static partial class Handlers
                 PrincipalResidenceMajorityOfTime(request as global::Tax121PrincipalResidence.Requests.PrincipalResidenceMajorityOfTimeRequest ?? new(assertions), ref resolution);
                 break;
             case "principal-residence-factors":
-                PrincipalResidenceFactors(request as global::Tax121PrincipalResidence.Requests.PrincipalResidenceFactorsRequest ?? new(assertions), ref resolution);
+                resolution = PrincipalResidenceFactors(request as global::Tax121PrincipalResidence.Requests.PrincipalResidenceFactorsRequest ?? new(assertions));
                 break;
             case "vacant-land-not-principal-residence":
                 VacantLandNotPrincipalResidence(request as global::Tax121PrincipalResidence.Requests.VacantLandNotPrincipalResidenceRequest ?? new(assertions), ref resolution);
@@ -376,7 +376,7 @@ internal static partial class Handlers
                 VacantLandSingleSale(request as global::Tax121PrincipalResidence.Requests.VacantLandSingleSaleRequest ?? new(assertions), ref resolution);
                 break;
             case "maximum-limitation-amount":
-                MaximumLimitationAmount(request as global::Tax121PrincipalResidence.Requests.MaximumLimitationAmountRequest ?? new(assertions), ref resolution);
+                resolution = MaximumLimitationAmount(request as global::Tax121PrincipalResidence.Requests.MaximumLimitationAmountRequest ?? new(assertions));
                 break;
             case "vacant-land-ordering-across-years":
                 VacantLandOrderingAcrossYears(request as global::Tax121PrincipalResidence.Requests.VacantLandOrderingAcrossYearsRequest ?? new(assertions), ref resolution);
@@ -397,7 +397,7 @@ internal static partial class Handlers
                 CombinedSaleNetsDwellingLoss(request as global::Tax121PrincipalResidence.Requests.CombinedSaleNetsDwellingLossRequest ?? new(assertions), ref resolution);
                 break;
             case "ownership-and-use-aggregation":
-                OwnershipAndUseAggregation(request as global::Tax121PrincipalResidence.Requests.OwnershipAndUseAggregationRequest ?? new(assertions), ref resolution);
+                resolution = OwnershipAndUseAggregation(request as global::Tax121PrincipalResidence.Requests.OwnershipAndUseAggregationRequest ?? new(assertions));
                 break;
             case "ownership-and-use-nonconcurrent":
                 OwnershipAndUseNonconcurrent(request as global::Tax121PrincipalResidence.Requests.OwnershipAndUseNonconcurrentRequest ?? new(assertions), ref resolution);
@@ -467,23 +467,23 @@ internal static partial class Handlers
     {
         "exclusion-of-gain" => Hooked("ExclusionOfGain", typeof(global::Tax121PrincipalResidence.Requests.ExclusionOfGainRequest)),
         "ownership-and-use-test" => Hooked("OwnershipAndUseTest", typeof(global::Tax121PrincipalResidence.Requests.OwnershipAndUseTestRequest)),
-        "residence-facts-and-circumstances" => Hooked("ResidenceFactsAndCircumstances", typeof(global::Tax121PrincipalResidence.Requests.ResidenceFactsAndCircumstancesRequest)),
-        "residence-may-include" => Hooked("ResidenceMayInclude", typeof(global::Tax121PrincipalResidence.Requests.ResidenceMayIncludeRequest)),
+        "residence-facts-and-circumstances" => true,
+        "residence-may-include" => true,
         "residence-cooperative-apartment" => Hooked("ResidenceCooperativeApartment", typeof(global::Tax121PrincipalResidence.Requests.ResidenceCooperativeApartmentRequest)),
         "residence-excludes-personal-property" => Hooked("ResidenceExcludesPersonalProperty", typeof(global::Tax121PrincipalResidence.Requests.ResidenceExcludesPersonalPropertyRequest)),
         "principal-residence-facts-and-circumstances" => Hooked("PrincipalResidenceFactsAndCircumstances", typeof(global::Tax121PrincipalResidence.Requests.PrincipalResidenceFactsAndCircumstancesRequest)),
         "principal-residence-majority-of-time" => Hooked("PrincipalResidenceMajorityOfTime", typeof(global::Tax121PrincipalResidence.Requests.PrincipalResidenceMajorityOfTimeRequest)),
-        "principal-residence-factors" => Hooked("PrincipalResidenceFactors", typeof(global::Tax121PrincipalResidence.Requests.PrincipalResidenceFactorsRequest)),
+        "principal-residence-factors" => true,
         "vacant-land-not-principal-residence" => Hooked("VacantLandNotPrincipalResidence", typeof(global::Tax121PrincipalResidence.Requests.VacantLandNotPrincipalResidenceRequest)),
         "vacant-land-single-sale" => Hooked("VacantLandSingleSale", typeof(global::Tax121PrincipalResidence.Requests.VacantLandSingleSaleRequest)),
-        "maximum-limitation-amount" => Hooked("MaximumLimitationAmount", typeof(global::Tax121PrincipalResidence.Requests.MaximumLimitationAmountRequest)),
+        "maximum-limitation-amount" => true,
         "vacant-land-ordering-across-years" => Hooked("VacantLandOrderingAcrossYears", typeof(global::Tax121PrincipalResidence.Requests.VacantLandOrderingAcrossYearsRequest)),
         "vacant-land-two-year-rule-disregard" => Hooked("VacantLandTwoYearRuleDisregard", typeof(global::Tax121PrincipalResidence.Requests.VacantLandTwoYearRuleDisregardRequest)),
         "vacant-land-sold-first-is-taxable" => Hooked("VacantLandSoldFirstIsTaxable", typeof(global::Tax121PrincipalResidence.Requests.VacantLandSoldFirstIsTaxableRequest)),
         "vacant-land-amended-return" => Hooked("VacantLandAmendedReturn", typeof(global::Tax121PrincipalResidence.Requests.VacantLandAmendedReturnRequest)),
         "examples-b" => Hooked("ExamplesB", typeof(global::Tax121PrincipalResidence.Requests.ExamplesBRequest)),
         "combined-sale-nets-dwelling-loss" => Hooked("CombinedSaleNetsDwellingLoss", typeof(global::Tax121PrincipalResidence.Requests.CombinedSaleNetsDwellingLossRequest)),
-        "ownership-and-use-aggregation" => Hooked("OwnershipAndUseAggregation", typeof(global::Tax121PrincipalResidence.Requests.OwnershipAndUseAggregationRequest)),
+        "ownership-and-use-aggregation" => true,
         "ownership-and-use-nonconcurrent" => Hooked("OwnershipAndUseNonconcurrent", typeof(global::Tax121PrincipalResidence.Requests.OwnershipAndUseNonconcurrentRequest)),
         "uniformed-services-suspension-absent" => Hooked("UniformedServicesSuspensionAbsent", typeof(global::Tax121PrincipalResidence.Requests.UniformedServicesSuspensionAbsentRequest)),
         "use-requires-occupancy" => true,

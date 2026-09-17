@@ -128,12 +128,12 @@ public sealed class CorrespondenceTests
         AssertDeclines("ownership-and-use-test", UnresolvedReason.UnsupportedRule, EntryPoints.OwnershipAndUseTest.Resolve(global::Tax121PrincipalResidence.Requests.OwnershipAndUseTestRequest.Empty), new SourceLocator("cfr-26-1.121-1", "§ 1.121-1(a)"));
 
     [Fact]
-    public void residence_facts_and_circumstances__declines_UnsupportedRule_row_2() =>
-        AssertDeclines("residence-facts-and-circumstances", UnresolvedReason.UnsupportedRule, EntryPoints.ResidenceFactsAndCircumstances.Resolve(global::Tax121PrincipalResidence.Requests.ResidenceFactsAndCircumstancesRequest.Empty), new SourceLocator("cfr-26-1.121-1", "§ 1.121-1(b)"));
+    public void residence_facts_and_circumstances__is_implemented_so_a_hand_written_handler_answers_it() =>
+        Assert.True(Registry.HasImplementation("residence-facts-and-circumstances"), "residence-facts-and-circumstances is implemented in the overlay and has no [Implements] handler");
 
     [Fact]
-    public void residence_may_include__declines_UnsupportedRule_row_2() =>
-        AssertDeclines("residence-may-include", UnresolvedReason.UnsupportedRule, EntryPoints.ResidenceMayInclude.Resolve(global::Tax121PrincipalResidence.Requests.ResidenceMayIncludeRequest.Empty), new SourceLocator("cfr-26-1.121-1", "§ 1.121-1(b)"));
+    public void residence_may_include__is_implemented_so_a_hand_written_handler_answers_it() =>
+        Assert.True(Registry.HasImplementation("residence-may-include"), "residence-may-include is implemented in the overlay and has no [Implements] handler");
 
     [Fact]
     public void residence_cooperative_apartment__declines_UnsupportedRule_row_2() =>
@@ -152,8 +152,8 @@ public sealed class CorrespondenceTests
         AssertDeclines("principal-residence-majority-of-time", UnresolvedReason.UnsupportedRule, EntryPoints.PrincipalResidenceMajorityOfTime.Resolve(global::Tax121PrincipalResidence.Requests.PrincipalResidenceMajorityOfTimeRequest.Empty), new SourceLocator("cfr-26-1.121-1", "§ 1.121-1(b)(2)"));
 
     [Fact]
-    public void principal_residence_factors__declines_UnsupportedRule_row_2() =>
-        AssertDeclines("principal-residence-factors", UnresolvedReason.UnsupportedRule, EntryPoints.PrincipalResidenceFactors.Resolve(global::Tax121PrincipalResidence.Requests.PrincipalResidenceFactorsRequest.Empty), new SourceLocator("cfr-26-1.121-1", "§ 1.121-1(b)(2)"));
+    public void principal_residence_factors__is_implemented_so_a_hand_written_handler_answers_it() =>
+        Assert.True(Registry.HasImplementation("principal-residence-factors"), "principal-residence-factors is implemented in the overlay and has no [Implements] handler");
 
     [Fact]
     public void vacant_land_not_principal_residence__declines_UnsupportedRule_row_2() =>
@@ -164,8 +164,8 @@ public sealed class CorrespondenceTests
         AssertDeclines("vacant-land-single-sale", UnresolvedReason.UnsupportedRule, EntryPoints.VacantLandSingleSale.Resolve(global::Tax121PrincipalResidence.Requests.VacantLandSingleSaleRequest.Empty), new SourceLocator("cfr-26-1.121-1", "§ 1.121-1(b)(3)(ii)"));
 
     [Fact]
-    public void maximum_limitation_amount__declines_UnsupportedRule_row_2() =>
-        AssertDeclines("maximum-limitation-amount", UnresolvedReason.UnsupportedRule, EntryPoints.MaximumLimitationAmount.Resolve(global::Tax121PrincipalResidence.Requests.MaximumLimitationAmountRequest.Empty), new SourceLocator("cfr-26-1.121-1", "§ 1.121-1(b)(3)(ii)"));
+    public void maximum_limitation_amount__is_implemented_so_a_hand_written_handler_answers_it() =>
+        Assert.True(Registry.HasImplementation("maximum-limitation-amount"), "maximum-limitation-amount is implemented in the overlay and has no [Implements] handler");
 
     [Fact]
     public void vacant_land_ordering_across_years__declines_UnsupportedRule_row_2() =>
@@ -192,8 +192,8 @@ public sealed class CorrespondenceTests
         AssertDeclines("combined-sale-nets-dwelling-loss", UnresolvedReason.UnsupportedRule, EntryPoints.CombinedSaleNetsDwellingLoss.Resolve(global::Tax121PrincipalResidence.Requests.CombinedSaleNetsDwellingLossRequest.Empty), new SourceLocator("cfr-26-1.121-1", "§ 1.121-1(b)(4) Example 4"));
 
     [Fact]
-    public void ownership_and_use_aggregation__declines_UnsupportedRule_row_2() =>
-        AssertDeclines("ownership-and-use-aggregation", UnresolvedReason.UnsupportedRule, EntryPoints.OwnershipAndUseAggregation.Resolve(global::Tax121PrincipalResidence.Requests.OwnershipAndUseAggregationRequest.Empty), new SourceLocator("cfr-26-1.121-1", "§ 1.121-1(c)"));
+    public void ownership_and_use_aggregation__is_implemented_so_a_hand_written_handler_answers_it() =>
+        Assert.True(Registry.HasImplementation("ownership-and-use-aggregation"), "ownership-and-use-aggregation is implemented in the overlay and has no [Implements] handler");
 
     [Fact]
     public void ownership_and_use_nonconcurrent__declines_UnsupportedRule_row_2() =>
