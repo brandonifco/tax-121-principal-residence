@@ -155,7 +155,7 @@ public static class Registry
         new("vacant-land-amended-return", EntryStatus.Mapped, CorrespondenceRow.NotBuilt, [MapEntries.VacantLandAmendedReturn.Locator]),
         new("examples-b", EntryStatus.Declined, CorrespondenceRow.ScopeOut, [MapEntries.ExamplesB.Locator]),
         new("combined-sale-nets-dwelling-loss", EntryStatus.Mapped, CorrespondenceRow.NotBuilt, [MapEntries.CombinedSaleNetsDwellingLoss.Locator]),
-        new("ownership-and-use-aggregation", EntryStatus.Mapped, CorrespondenceRow.NotBuilt, [MapEntries.OwnershipAndUseAggregation.Locator]),
+        new("ownership-and-use-aggregation", EntryStatus.Implemented, CorrespondenceRow.None, [MapEntries.OwnershipAndUseAggregation.Locator]),
         new("ownership-and-use-nonconcurrent", EntryStatus.Mapped, CorrespondenceRow.NotBuilt, [MapEntries.OwnershipAndUseNonconcurrent.Locator]),
         new("uniformed-services-suspension-absent", EntryStatus.Declined, CorrespondenceRow.ScopeOut, [MapEntries.UniformedServicesSuspensionAbsent.Locator]),
         new("use-requires-occupancy", EntryStatus.Mapped, CorrespondenceRow.NotBuilt, [MapEntries.UseRequiresOccupancy.Locator]),

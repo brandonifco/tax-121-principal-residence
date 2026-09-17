@@ -192,8 +192,8 @@ public sealed class CorrespondenceTests
         AssertDeclines("combined-sale-nets-dwelling-loss", UnresolvedReason.UnsupportedRule, EntryPoints.CombinedSaleNetsDwellingLoss.Resolve(global::Tax121PrincipalResidence.Requests.CombinedSaleNetsDwellingLossRequest.Empty), new SourceLocator("cfr-26-1.121-1", "§ 1.121-1(b)(4) Example 4"));
 
     [Fact]
-    public void ownership_and_use_aggregation__declines_UnsupportedRule_row_2() =>
-        AssertDeclines("ownership-and-use-aggregation", UnresolvedReason.UnsupportedRule, EntryPoints.OwnershipAndUseAggregation.Resolve(global::Tax121PrincipalResidence.Requests.OwnershipAndUseAggregationRequest.Empty), new SourceLocator("cfr-26-1.121-1", "§ 1.121-1(c)"));
+    public void ownership_and_use_aggregation__is_implemented_so_a_hand_written_handler_answers_it() =>
+        Assert.True(Registry.HasImplementation("ownership-and-use-aggregation"), "ownership-and-use-aggregation is implemented in the overlay and has no [Implements] handler");
 
     [Fact]
     public void ownership_and_use_nonconcurrent__declines_UnsupportedRule_row_2() =>
