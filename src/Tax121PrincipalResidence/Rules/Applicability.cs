@@ -50,4 +50,40 @@ public static class Applicability
     public static Resolution<SectionApplicability> Of(DateOnly saleOrExchangeDate) =>
         Resolution<SectionApplicability>.FromValue(
             new SectionApplicability(saleOrExchangeDate, saleOrExchangeDate >= ApplicableFrom));
+
+    /// <summary>
+    /// The gate every entry <see cref="MapEntries.EffectiveDate"/> enables reads before it evaluates its own rule
+    /// (decision 0001): null when this section applies to a sale or exchange on
+    /// <paramref name="saleOrExchangeDate"/>, and the caller proceeds; otherwise the decline
+    /// <paramref name="entry"/> answers.
+    /// </summary>
+    /// <remarks>
+    /// The decline is <see cref="UnresolvedReason.OutsideCurrentScope"/>, citing § 1.121-1(f), and it names
+    /// <see cref="MapEntries.RetroactiveElection"/> (§ 1.121-4(j)) as the question the engine does not answer.
+    /// It is not "not excludable": for a taxpayer who elected to apply the section retroactively that would be
+    /// wrong.
+    /// </remarks>
+    /// <param name="entry">The gated entry being resolved.</param>
+    /// <param name="saleOrExchangeDate">The date of the sale or exchange. Required, never defaulted.</param>
+    /// <returns>Null to proceed, or the decline.</returns>
+    /// <exception cref="ArgumentException">No date was given; its <c>ParamName</c> is <c>SaleOrExchangeDate</c>.</exception>
+    public static UnresolvedResult? Gate(MapEntry entry, DateOnly? saleOrExchangeDate)
+    {
+        ArgumentNullException.ThrowIfNull(entry);
+        var date = saleOrExchangeDate
+            ?? throw new ArgumentException(
+                $"resolving the map entry '{entry.Id}' needs the date of the sale or exchange, and it was not set",
+                nameof(Requests.EffectiveDateRequest.SaleOrExchangeDate));
+
+        return Of(date).Match(
+            finding => finding.Applies
+                ? null
+                : new UnresolvedResult(
+                    UnresolvedReason.OutsideCurrentScope,
+                    string.Create(
+                        CultureInfo.InvariantCulture,
+                        $"resolve the map entry '{entry.Id}' [{entry.Locator.Citation}] for {finding}; whether the taxpayer elected to apply this section retroactively ('{MapEntries.RetroactiveElection.Id}', see § 1.121-4(j)) is outside this engine's scope"),
+                    finding.Authority),
+            unresolved => unresolved);
+    }
 }

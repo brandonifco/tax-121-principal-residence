@@ -21,6 +21,22 @@
       {
         "test": "EffectiveDateEntryPointTests.The_dictionary_dispatch_carries_no_date_and_refuses_the_same_way",
         "mutation": "Handlers.EffectiveDate defaulted a missing date to the effective date (`request.SaleOrExchangeDate ?? Applicability.ApplicableFrom` for `Demand(request.SaleOrExchangeDate, ...)`), so `Registry.Resolve(\"effective-date\", RuleRequest.Empty)` resolved as within the section; this test went red. It went red too with a missing date answered as an unresolved `MissingRulesData` decline instead of refused."
+      },
+      {
+        "test": "EffectiveDateGateTests.A_sale_on_23_December_2002_declines_OutsideCurrentScope_citing_1_121_1_f_and_naming_the_retroactive_election",
+        "mutation": "Applicability.Gate let every sale proceed (`finding => true` for `finding => finding.Applies`); this test went red. It went red too with the decline's reason `MissingRulesData`, and `RequiresInterpretation`, for `OutsideCurrentScope`; with it citing the gated entry's own locator (`entry.Locator` for `finding.Authority`, § 1.121-1(a)); with the retroactive election dropped from the message; with `see § 1.121-4(j)` dropped from it; and with the gated entry's id dropped from it. Citing retroactive-election's locator (`MapEntries.RetroactiveElection.Locator` for `finding.Authority`) did NOT turn it red: both entries cite `§ 1.121-1(f)`, so the locator cannot tell them apart, and the message is what names the election."
+      },
+      {
+        "test": "EffectiveDateGateTests.A_sale_on_24_December_2002_proceeds",
+        "mutation": "Applicability.Gate declined every sale (`finding => false` for `finding => finding.Applies`); this test went red. It went red too with Applicability.Of excluding the date itself (`saleOrExchangeDate > ApplicableFrom` for `saleOrExchangeDate >= ApplicableFrom`), and with the gate evaluating the day before the effective date instead of the caller's date (`Of(ApplicableFrom.AddDays(-1))` for `Of(date)`)."
+      },
+      {
+        "test": "EffectiveDateGateTests.A_sale_on_25_December_2002_proceeds",
+        "mutation": "Applicability.Of found only the effective date itself within the section (`saleOrExchangeDate == ApplicableFrom` for `saleOrExchangeDate >= ApplicableFrom`); this test went red and every other gate and effective-date test stayed green. It went red too with Applicability.Gate declining every sale (`finding => false`), and with the gate evaluating the day before the effective date instead of the caller's date."
+      },
+      {
+        "test": "EffectiveDateGateTests.Without_a_sale_or_exchange_date_the_gate_refuses_rather_than_assume_one",
+        "mutation": "Applicability.Gate defaulted a missing date to the effective date (`saleOrExchangeDate ?? ApplicableFrom` for `?? throw new ArgumentException(...)`), so a missing date proceeded; this test went red. It went red too with the refusal's ParamName `\"saleOrExchangeDate\"` for `nameof(Requests.EffectiveDateRequest.SaleOrExchangeDate)`, and with the gated entry's id dropped from its message."
       }
     ]
   }
