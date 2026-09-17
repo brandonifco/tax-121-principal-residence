@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Tax121PrincipalResidence/Tax121PrincipalResidence.csproj" />
+  <Project Path="tests/Tax121PrincipalResidence.Tests/Tax121PrincipalResidence.Tests.csproj" />
+</Solution>

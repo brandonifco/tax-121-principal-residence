@@ -1,0 +1,34 @@
+# Emitted by rules-factory as a managed file (rules-factory decision 0029).
+#
+# The kernel's determinism diagnostics, stated rather than left to the package's defaults, so that
+# what this engine enforces is legible without knowing what RulesKernel.Analyzers ships as. The
+# engine builds with warnings as errors, so every warning below is a build error in practice; they
+# are `warning` rather than `error` here so that a run without -warnaserror still says what it
+# found instead of stopping at the first one.
+#
+# RK0001  ambient or unpinned entropy        RK0004  concurrency in resolution
+# RK0002  ambient clock                      RK0005  a runtime hash code
+# RK0003  ambient machine state              RK0007  an unordered collection materialized in order
+#
+# A diagnostic id is a permanent contract: the kernel never reuses one, so a suppression written
+# here keeps meaning what it meant.
+
+[src/**/*.cs]
+dotnet_diagnostic.RK0001.severity = warning
+dotnet_diagnostic.RK0002.severity = warning
+dotnet_diagnostic.RK0003.severity = warning
+dotnet_diagnostic.RK0004.severity = warning
+dotnet_diagnostic.RK0005.severity = warning
+dotnet_diagnostic.RK0007.severity = warning
+
+# Tests are not the engine. A test may fix a clock, build a set to prove ordering is not relied on,
+# or run something concurrently to show a result does not depend on the order -- and an analyzer
+# cannot tell that from the engine doing the same thing. The engine project is where determinism is
+# a property of the product; here it is scaffolding.
+[tests/**/*.cs]
+dotnet_diagnostic.RK0001.severity = none
+dotnet_diagnostic.RK0002.severity = none
+dotnet_diagnostic.RK0003.severity = none
+dotnet_diagnostic.RK0004.severity = none
+dotnet_diagnostic.RK0005.severity = none
+dotnet_diagnostic.RK0007.severity = none

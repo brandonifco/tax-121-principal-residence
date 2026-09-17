@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "labels": {
+    "ready": "state:ready",
+    "blocked": "state:blocked",
+    "needsDecision": "state:needs-decision",
+    "normalRisk": "risk:normal",
+    "independentRisk": "risk:independent-review"
+  },
+  "review": {
+    "semanticContext": "rules-verdict/semantic",
+    "semanticPaths": [
+      "src/**",
+      "tests/**",
+      "corpus-map.overlay.json",
+      "RulesFactory.Packages.g.props",
+      "corpus/**",
+      "docs/decisions/**"
+    ],
+    "independentFallback": [
+      {
+        "id": "codex",
+        "context": "rules-verdict/codex"
+      },
+      {
+        "id": "gemini",
+        "context": "rules-verdict/gemini"
+      },
+      {
+        "id": "in-house-independent",
+        "context": "rules-verdict/in-house-independent"
+      }
+    ]
+  },
+  "worktrees": {
+    "rootEnvironmentVariable": "RULES_ENGINE_WORKTREE_ROOT",
+    "primaryMutationEscapeHatch": "RULES_ENGINE_ALLOW_PRIMARY_MUTATION"
+  }
+}

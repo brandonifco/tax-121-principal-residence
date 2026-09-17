@@ -1,0 +1,48 @@
+name: conformance-gate
+
+# Emitted by rules-factory as a managed file (decision 0029). It runs tools/conformance-gate.py,
+# which asks whether the review verdicts this change needs are recorded at the commit being
+# merged. The verdicts themselves are commit statuses, written by tools/record-verdict.py; this
+# workflow records nothing and reviews nothing.
+#
+# It re-runs on `synchronize` because that is the point: a new commit means the verdicts recorded
+# on the old one no longer describe what is being merged, and this check goes red again by itself.
+#
+# It deliberately does NOT trigger on `status`, though recording a verdict is exactly when this
+# check must be asked again. A `status` run belongs to the default branch's commit, not to the
+# pull request whose head the verdict names, so this job would report the required check's name
+# onto a commit that is nobody's head -- and `github.event.pull_request.number` is empty there, so
+# it would have no pull request to ask about either. Recording a verdict re-runs this workflow
+# from outside instead: .github/workflows/verdict-requeue.yml re-requests the pull request run at
+# that head. So this check has exactly one producer, the `pull_request` event, and one commit it
+# ever lands on (rules-factory #191).
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, labeled, unlabeled]
+    branches: [main]
+
+concurrency:
+  group: conformance-gate-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pull-requests: read
+  issues: read
+  statuses: read
+
+jobs:
+  conformance-gate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Require the recorded verdicts at this commit
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 tools/conformance-gate.py "${{ github.event.pull_request.number }}"

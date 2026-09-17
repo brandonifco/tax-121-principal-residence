@@ -1,0 +1,62 @@
+name: verdict-requeue
+
+# Emitted by rules-factory as a managed file (decision 0029). Recording a review verdict writes a
+# commit status on a pull request's head (tools/record-verdict.py). Nothing about that re-runs the
+# required `conformance-gate` check, which had already concluded that the verdict was missing, so
+# before this workflow existed the pull request stayed BLOCKED until somebody ran `gh run rerun`
+# by hand -- which is what the live run of #157 hit (rules-factory #191).
+#
+# This job asks the gate to report again, and reports nothing itself. It writes no commit status
+# and creates no check run: tools/requeue-gate.py says why in its docstring, and the short of it is
+# that a status named `conformance-gate` would stand beside the failed check run of that name
+# rather than replace it, and the pull request would be blocked forever.
+#
+# **Its job is deliberately not named `conformance-gate`.** A `status` event's run belongs to the
+# default branch's head, not to the pull request, so this job's own check run lands there, where it
+# is harmless and green. A check run sharing the required check's name on a commit that is nobody's
+# head is the failure this fix exists to avoid.
+#
+# **This is deliberately not a required check.** It runs on the default branch's commit, where a
+# required check governs nothing; requiring it would make every verdict's bookkeeping a merge
+# condition for a commit that has already merged.
+
+on:
+  status:
+
+concurrency:
+  # `github.event.sha` -- the commit the verdict names -- and NOT `github.sha`, which on a `status`
+  # event is the default branch's head: the same value for every verdict in the repository. With
+  # `cancel-in-progress`, that group would have two verdicts recorded a minute apart on unrelated
+  # pull requests cancel each other, and an independent-review issue records two verdicts in a row.
+  group: verdict-requeue-${{ github.event.sha }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pull-requests: read
+  # The one write this makes, and all it is for: re-requesting an existing `conformance-gate` run
+  # of the pull request at this commit. It creates no run of its own and changes no code.
+  actions: write
+
+jobs:
+  verdict-requeue:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Re-run the gate at the commit this verdict names
+        # The payload is passed as environment variables and never interpolated into the command
+        # line. `.github/workflows/pr-policy.yml` states the discipline this follows: a status
+        # context and a SHA arrive from GitHub as text somebody else wrote, and a `${{ }}` in a
+        # `run:` line is textual substitution into a shell. tools/requeue-gate.py reads them from
+        # the environment, where they are values rather than script.
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERDICT_SHA: ${{ github.event.sha }}
+          VERDICT_CONTEXT: ${{ github.event.context }}
+          VERDICT_STATE: ${{ github.event.state }}
+        run: python3 tools/requeue-gate.py

@@ -1,0 +1,38 @@
+name: pr-policy
+
+# Emitted by rules-factory as a managed file (decision 0029). It runs tools/pr-policy.py and
+# nothing else: the contract is stated once, in that script and in the pull request template, and
+# restating any of it here would create a second contract that drifts from the first.
+#
+# `pull_request_target` is deliberately NOT used. This reads a pull request's body, which is
+# attacker-controlled text; running with the base repository's write token would be a way to turn
+# that text into privilege. The read-only token below is all the check needs.
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened, labeled, unlabeled]
+    branches: [main]
+
+concurrency:
+  group: pr-policy-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pull-requests: read
+  issues: read
+
+jobs:
+  pr-policy:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Check the pull request against the contract
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 tools/pr-policy.py "${{ github.event.pull_request.number }}"

@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <PackageReference Include="RulesKernel" />
+    <!-- The map package is referenced from RulesFactory.Packages.g.props, which `factory produce`
+         rewrites, so the reference always names the package the code was generated from. -->
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- What this engine was produced from (tools/factory/provenance.py); a generated test
+         asserts the embedded copy is the file. -->
+    <EmbeddedResource Include="../../provenance.json" LogicalName="Tax121PrincipalResidence.provenance.json" Link="provenance.json" />
+  </ItemGroup>
+
+</Project>

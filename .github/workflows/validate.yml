@@ -1,0 +1,46 @@
+name: validate
+
+# Emitted by rules-factory tools/factory (the gate recipe, #3). Rewritten by every
+# `factory produce`.
+#
+# This engine has exactly one definition of "acceptable": ./scripts/validate.sh full. This
+# workflow runs it and does nothing else; reimplementing the recipe here would create a second
+# definition that drifts from the first.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: validate-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    # A fixed release, not ubuntu-latest: that alias moves, and the toolchain under it with it.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Read the pinned SDK version
+        id: sdk
+        run: echo "version=$(python3 -c 'import json;print(json.load(open("global.json"))["sdk"]["version"])')" >> "$GITHUB_OUTPUT"
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6.0.0
+        with:
+          dotnet-version: ${{ steps.sdk.outputs.version }}
+
+      - name: Validate
+        env:
+          CI: "true"
+        run: ./scripts/validate.sh full
