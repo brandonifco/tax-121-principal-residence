@@ -173,7 +173,7 @@ public static class Registry
         new("dwelling-unit-definition", EntryStatus.Mapped, CorrespondenceRow.NotBuilt, [MapEntries.DwellingUnitDefinition.Locator]),
         new("method-of-allocation", EntryStatus.Mapped, CorrespondenceRow.NotBuilt, [MapEntries.MethodOfAllocation.Locator]),
         new("examples-e", EntryStatus.Declined, CorrespondenceRow.ScopeOut, [MapEntries.ExamplesE.Locator]),
-        new("effective-date", EntryStatus.Mapped, CorrespondenceRow.NotBuilt, [MapEntries.EffectiveDate.Locator]),
+        new("effective-date", EntryStatus.Implemented, CorrespondenceRow.None, [MapEntries.EffectiveDate.Locator]),
         new("retroactive-election", EntryStatus.Declined, CorrespondenceRow.ScopeOut, [MapEntries.RetroactiveElection.Locator]),
     ];
 

@@ -1,1 +1,27 @@
-{}
+{
+  "effective-date": {
+    "status": "implemented",
+    "implementedIn": {
+      "ruleset": "tax-121-principal-residence",
+      "version": 1
+    },
+    "tests": [
+      {
+        "test": "EffectiveDateEntryPointTests.A_sale_on_24_December_2002_is_within_this_section_citing_1_121_1_f",
+        "mutation": "Applicability.Of excluded the date itself (`saleOrExchangeDate > ApplicableFrom` for `saleOrExchangeDate >= ApplicableFrom`), so a sale on 24 December 2002 was outside the section; this test went red. It went red too with Applicability.ApplicableFrom set to the corpus's pinned baseline date (`new(2026, 1, 1)` for `new(2002, 12, 24)`), with it set a day early (`new(2002, 12, 23)`), and with SectionApplicability.Authority citing exclusion-of-gain's `§ 1.121-1(a)` (`MapEntries.ExclusionOfGain.Locator` for `MapEntries.EffectiveDate.Locator`). Citing retroactive-election's locator did NOT turn it red: both entries cite `§ 1.121-1(f)`, so the locator cannot tell them apart."
+      },
+      {
+        "test": "EffectiveDateEntryPointTests.A_sale_on_23_December_2002_is_outside_this_section_citing_1_121_1_f",
+        "mutation": "Applicability.Of found every sale within the section (`true` for `saleOrExchangeDate >= ApplicableFrom`); this test went red. It went red too with Applicability.ApplicableFrom a day early (`new(2002, 12, 23)` for `new(2002, 12, 24)`), with the finding recording the rule's date instead of the caller's (`new SectionApplicability(ApplicableFrom, ...` for `new SectionApplicability(saleOrExchangeDate, ...`), and with Authority citing exclusion-of-gain's `§ 1.121-1(a)`."
+      },
+      {
+        "test": "EffectiveDateEntryPointTests.Without_a_sale_or_exchange_date_it_refuses_rather_than_assume_one",
+        "mutation": "Handlers.EffectiveDate defaulted a missing date to the effective date (`request.SaleOrExchangeDate ?? Applicability.ApplicableFrom` for `Demand(request.SaleOrExchangeDate, ...)`), so a request with no date resolved as within the section; this test went red. It went red too with a missing date answered as an unresolved `MissingRulesData` decline citing `§ 1.121-1(f)` instead of refused."
+      },
+      {
+        "test": "EffectiveDateEntryPointTests.The_dictionary_dispatch_carries_no_date_and_refuses_the_same_way",
+        "mutation": "Handlers.EffectiveDate defaulted a missing date to the effective date (`request.SaleOrExchangeDate ?? Applicability.ApplicableFrom` for `Demand(request.SaleOrExchangeDate, ...)`), so `Registry.Resolve(\"effective-date\", RuleRequest.Empty)` resolved as within the section; this test went red. It went red too with a missing date answered as an unresolved `MissingRulesData` decline instead of refused."
+      }
+    ]
+  }
+}

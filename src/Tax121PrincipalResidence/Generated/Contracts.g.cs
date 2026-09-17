@@ -326,8 +326,8 @@ internal static partial class Handlers
     /// <summary>The examples illustrating paragraph (e) (<c>examples-e</c>): optional.</summary>
     static partial void ExamplesE(global::Tax121PrincipalResidence.Requests.ExamplesERequest request, ref Resolution<object>? resolution);
 
-    /// <summary>When this section applies (<c>effective-date</c>): optional.</summary>
-    static partial void EffectiveDate(global::Tax121PrincipalResidence.Requests.EffectiveDateRequest request, ref Resolution<object>? resolution);
+    /// <summary>When this section applies (<c>effective-date</c>): required, the entry is implemented.</summary>
+    internal static partial Resolution<object> EffectiveDate(global::Tax121PrincipalResidence.Requests.EffectiveDateRequest request);
 
     /// <summary>Electing to apply this section retroactively (<c>retroactive-election</c>): optional.</summary>
     static partial void RetroactiveElection(global::Tax121PrincipalResidence.Requests.RetroactiveElectionRequest request, ref Resolution<object>? resolution);
@@ -451,7 +451,7 @@ internal static partial class Handlers
                 ExamplesE(request as global::Tax121PrincipalResidence.Requests.ExamplesERequest ?? new(assertions), ref resolution);
                 break;
             case "effective-date":
-                EffectiveDate(request as global::Tax121PrincipalResidence.Requests.EffectiveDateRequest ?? new(assertions), ref resolution);
+                resolution = EffectiveDate(request as global::Tax121PrincipalResidence.Requests.EffectiveDateRequest ?? new(assertions));
                 break;
             case "retroactive-election":
                 RetroactiveElection(request as global::Tax121PrincipalResidence.Requests.RetroactiveElectionRequest ?? new(assertions), ref resolution);
@@ -501,7 +501,7 @@ internal static partial class Handlers
         "dwelling-unit-definition" => Hooked("DwellingUnitDefinition", typeof(global::Tax121PrincipalResidence.Requests.DwellingUnitDefinitionRequest)),
         "method-of-allocation" => Hooked("MethodOfAllocation", typeof(global::Tax121PrincipalResidence.Requests.MethodOfAllocationRequest)),
         "examples-e" => Hooked("ExamplesE", typeof(global::Tax121PrincipalResidence.Requests.ExamplesERequest)),
-        "effective-date" => Hooked("EffectiveDate", typeof(global::Tax121PrincipalResidence.Requests.EffectiveDateRequest)),
+        "effective-date" => true,
         "retroactive-election" => Hooked("RetroactiveElection", typeof(global::Tax121PrincipalResidence.Requests.RetroactiveElectionRequest)),
         _ => false,
     };
