@@ -264,8 +264,8 @@ public sealed class CorrespondenceTests
         AssertDeclines("examples-e", UnresolvedReason.OutsideCurrentScope, EntryPoints.ExamplesE.Resolve(global::Tax121PrincipalResidence.Requests.ExamplesERequest.Empty), new SourceLocator("cfr-26-1.121-1", "§ 1.121-1(e)(4)"));
 
     [Fact]
-    public void effective_date__declines_UnsupportedRule_row_2() =>
-        AssertDeclines("effective-date", UnresolvedReason.UnsupportedRule, EntryPoints.EffectiveDate.Resolve(global::Tax121PrincipalResidence.Requests.EffectiveDateRequest.Empty), new SourceLocator("cfr-26-1.121-1", "§ 1.121-1(f)"));
+    public void effective_date__is_implemented_so_a_hand_written_handler_answers_it() =>
+        Assert.True(Registry.HasImplementation("effective-date"), "effective-date is implemented in the overlay and has no [Implements] handler");
 
     [Fact]
     public void retroactive_election__declines_OutsideCurrentScope_row_1() =>
