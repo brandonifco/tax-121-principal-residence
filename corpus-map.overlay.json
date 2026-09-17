@@ -40,6 +40,126 @@
       }
     ]
   },
+  "residence-facts-and-circumstances": {
+    "status": "implemented",
+    "implementedIn": {
+      "ruleset": "tax-121-principal-residence",
+      "version": 1
+    },
+    "tests": [
+      {
+        "test": "ResidenceFactsAndCircumstancesEntryPointTests.A_sale_on_24_December_2002_declines_RequiresInterpretation_citing_1_121_1_b_and_names_the_facts_given",
+        "mutation": "Residence.Used answered the open question instead of declining (`return true ? Resolution<object>.FromValue(true) : Resolution<object>.FromUnresolved(...)` for `return Resolution<object>.FromUnresolved(...)`); this test went red. It went red too with the reason `UnsupportedRule` for `RequiresInterpretation`; with the decline citing principal-residence-facts-and-circumstances's `§ 1.121-1(b)(2)` (`MapEntries.PrincipalResidenceFactsAndCircumstances.Locator`) or effective-date's `§ 1.121-1(f)`; with the facts given dropped from the message; with only the first fact named (`factsAndCircumstances.Take(1).Select` for `factsAndCircumstances.Select`); with \"all the facts and circumstances\" dropped from the message; and with the entry's id dropped from it. Citing residence-may-include's locator (`MapEntries.ResidenceMayInclude.Locator`) did NOT turn it red: both entries cite `§ 1.121-1(b)`, so the locator cannot tell them apart."
+      },
+      {
+        "test": "ResidenceFactsAndCircumstancesEntryPointTests.With_no_facts_given_it_still_declines_and_says_so",
+        "mutation": "Residence.Used named an empty list as a list of facts (`false` for `factsAndCircumstances.Count == 0`), so the decline ended \"it was given these facts: \" instead of saying it was given none; this test went red. It went red too with Residence.Used answering instead of declining, with the reason `UnsupportedRule`, with the decline citing `§ 1.121-1(b)(2)` or `§ 1.121-1(f)`, and with the facts-given clause dropped."
+      },
+      {
+        "test": "ResidenceFactsAndCircumstancesEntryPointTests.A_sale_on_23_December_2002_declines_OutsideCurrentScope_citing_1_121_1_f",
+        "mutation": "Handlers.ResidenceFactsAndCircumstances gated on the effective date instead of the caller's date (`Applicability.Gate(MapEntries.ResidenceFactsAndCircumstances, Applicability.ApplicableFrom)` for `..., request.SaleOrExchangeDate)`), so a sale on 23 December 2002 reached the rule and declined RequiresInterpretation; this test went red. It went red too with the gate naming exclusion-of-gain instead of this entry (`MapEntries.ExclusionOfGain` for `MapEntries.ResidenceFactsAndCircumstances`)."
+      },
+      {
+        "test": "ResidenceFactsAndCircumstancesEntryPointTests.Without_a_sale_or_exchange_date_it_refuses_rather_than_assume_one",
+        "mutation": "Handlers.ResidenceFactsAndCircumstances defaulted a missing date to the effective date (`request.SaleOrExchangeDate ?? Applicability.ApplicableFrom` for `request.SaleOrExchangeDate`), so a request with no date declined RequiresInterpretation instead of refusing; this test went red. It went red too with the handler gating on the effective date instead of the caller's date."
+      },
+      {
+        "test": "ResidenceFactsAndCircumstancesEntryPointTests.Without_the_facts_it_refuses_rather_than_assume_none",
+        "mutation": "Handlers.ResidenceFactsAndCircumstances defaulted missing facts to none (`request.FactsAndCircumstances ?? []` for `?? throw Missing(...)`), so a request with no facts declined instead of refusing; this test went red. It went red too with Residence.Used accepting a null fact (`fact => false` for `fact => fact is null`)."
+      },
+      {
+        "test": "ResidenceFactsAndCircumstancesEntryPointTests.The_dictionary_dispatch_carries_no_date_and_refuses_the_same_way",
+        "mutation": "Handlers.ResidenceFactsAndCircumstances defaulted a missing date to the effective date (`request.SaleOrExchangeDate ?? Applicability.ApplicableFrom`), so `Registry.Resolve(\"residence-facts-and-circumstances\", RuleRequest.Empty)` refused for the facts instead of the date; this test went red. It went red too with the handler gating on the effective date instead of the caller's date."
+      }
+    ]
+  },
+  "residence-may-include": {
+    "status": "implemented",
+    "implementedIn": {
+      "ruleset": "tax-121-principal-residence",
+      "version": 1
+    },
+    "tests": [
+      {
+        "test": "ResidenceMayIncludeEntryPointTests.A_sale_on_24_December_2002_resolves_a_houseboat_and_a_house_trailer_as_printed_citing_1_121_1_b",
+        "mutation": "PropertyThatMayBeAResidence listed only the houseboat (`[ResidencePropertyKind.Houseboat]` for `[ResidencePropertyKind.Houseboat, ResidencePropertyKind.HouseTrailer]`); this test went red. It went red too with the two in the other order, with a third kind appended (`(ResidencePropertyKind)2`, where the co-operative apartment would go), with AsPrinted giving `\"a trailer\"` for `\"a house trailer\"`, with Authority citing effective-date's `§ 1.121-1(f)` (`MapEntries.EffectiveDate.Locator` for `MapEntries.ResidenceMayInclude.Locator`), and with Handlers.ResidenceMayInclude gating every dated request as though it were 2002-12-23 (`Applicability.ApplicableFrom.AddDays(-1)` for `request.SaleOrExchangeDate`). Citing residence-cooperative-apartment's locator (`MapEntries.ResidenceCooperativeApartment.Locator`) did NOT turn it red: both entries cite `§ 1.121-1(b)`, so the locator cannot tell them apart."
+      },
+      {
+        "test": "ResidenceMayIncludeEntryPointTests.A_sale_on_23_December_2002_declines_OutsideCurrentScope_citing_1_121_1_f",
+        "mutation": "Handlers.ResidenceMayInclude skipped the gate for a dated request (`(request.SaleOrExchangeDate is null ? Applicability.Gate(MapEntries.ResidenceMayInclude, null) : null)` for `Applicability.Gate(MapEntries.ResidenceMayInclude, request.SaleOrExchangeDate)`), so a sale on 2002-12-23 resolved the list; this test went red. It went red too with the gate passed effective-date's entry instead of its own (`MapEntries.EffectiveDate` for `MapEntries.ResidenceMayInclude`), so the decline did not name 'residence-may-include'."
+      },
+      {
+        "test": "ResidenceMayIncludeEntryPointTests.Without_a_sale_or_exchange_date_it_refuses_rather_than_assume_one",
+        "mutation": "Handlers.ResidenceMayInclude defaulted a missing date to the effective date (`request.SaleOrExchangeDate ?? Applicability.ApplicableFrom` for `request.SaleOrExchangeDate`), so a request with no date resolved the list; this test went red."
+      },
+      {
+        "test": "ResidenceMayIncludeEntryPointTests.The_dictionary_dispatch_carries_no_date_and_refuses_the_same_way",
+        "mutation": "Handlers.ResidenceMayInclude defaulted a missing date to the effective date (`request.SaleOrExchangeDate ?? Applicability.ApplicableFrom` for `request.SaleOrExchangeDate`), so `Registry.Resolve(\"residence-may-include\", RuleRequest.Empty)` resolved the list; this test went red."
+      }
+    ]
+  },
+  "principal-residence-factors": {
+    "status": "implemented",
+    "implementedIn": {
+      "ruleset": "tax-121-principal-residence",
+      "version": 1
+    },
+    "tests": [
+      {
+        "test": "PrincipalResidenceFactorsEntryPointTests.The_list_is_the_six_factors_as_printed_in_order_citing_1_121_1_b_2",
+        "mutation": "RelevantFactors.Factors dropped factor (vi) (the religious organizations and recreational clubs line removed); this test went red. It went red too with factor (i) dropped, with factor (iii) losing `, and voter registration card`, with factor (iv)'s text replaced by factor (v)'s (`The location of the taxpayer's banks` for `The taxpayer's mailing address for bills and correspondence`), with factor (ii)'s numeral `2` for `ii`, and with RelevantFactors.Authority citing effective-date's `§ 1.121-1(f)` (`MapEntries.EffectiveDate.Locator` for `MapEntries.PrincipalResidenceFactors.Locator`). Citing principal-residence-facts-and-circumstances' locator (`MapEntries.PrincipalResidenceFactsAndCircumstances.Locator`) did NOT turn it red: both entries cite `§ 1.121-1(b)(2)`, so the locator cannot tell them apart."
+      },
+      {
+        "test": "PrincipalResidenceFactorsEntryPointTests.The_six_are_not_the_whole_list",
+        "mutation": "RelevantFactors.IsExhaustive returned `true` for `false`, stating the six as the whole list although the corpus says the factors \"include, but are not limited to\" them; this test went red and every other test of this entry stayed green."
+      },
+      {
+        "test": "PrincipalResidenceFactorsEntryPointTests.A_sale_on_23_December_2002_declines_OutsideCurrentScope_citing_1_121_1_f_and_naming_this_entry",
+        "mutation": "Handlers.PrincipalResidenceFactors never took the gate's decline (`Applicability.Gate(MapEntries.PrincipalResidenceFactors, request.SaleOrExchangeDate ?? default) is { } decline && false` for `Applicability.Gate(MapEntries.PrincipalResidenceFactors, request.SaleOrExchangeDate) is { } decline`), so a sale on 23 December 2002 resolved the list; this test went red. It went red too with the handler gating as effective-date instead of its own entry (`Applicability.Gate(MapEntries.EffectiveDate, ...` for `Applicability.Gate(MapEntries.PrincipalResidenceFactors, ...`)."
+      },
+      {
+        "test": "PrincipalResidenceFactorsEntryPointTests.Without_a_sale_or_exchange_date_it_refuses_rather_than_assume_one",
+        "mutation": "Handlers.PrincipalResidenceFactors defaulted a missing date to the effective date (`request.SaleOrExchangeDate ?? Applicability.ApplicableFrom` for `request.SaleOrExchangeDate`), so a request with no date resolved the list; this test went red. It went red too with the gate's decline never taken (the `?? default ... && false` mutation above), and with the handler gating as effective-date, so the refusal named `'effective-date'` instead of `'principal-residence-factors'`."
+      },
+      {
+        "test": "PrincipalResidenceFactorsEntryPointTests.The_dictionary_dispatch_carries_no_date_and_refuses_the_same_way",
+        "mutation": "Handlers.PrincipalResidenceFactors defaulted a missing date to the effective date (`request.SaleOrExchangeDate ?? Applicability.ApplicableFrom` for `request.SaleOrExchangeDate`), so `Registry.Resolve(\"principal-residence-factors\", RuleRequest.Empty)` resolved the list; this test went red. It went red too with the gate's decline never taken (`request.SaleOrExchangeDate ?? default` with `&& false`)."
+      }
+    ]
+  },
+  "maximum-limitation-amount": {
+    "status": "implemented",
+    "implementedIn": {
+      "ruleset": "tax-121-principal-residence",
+      "version": 1
+    },
+    "tests": [
+      {
+        "test": "MaximumLimitationAmountTests.A_sale_on_24_December_2002_not_on_a_certain_joint_return_is_limited_to_250000_citing_1_121_1_b_3_ii",
+        "mutation": "MaximumLimitations.Amount printed the wrong figure (`25_000m` for `250_000m`); this test went red. It went red too with `250_000.01m` for `250_000m`; with the rule choosing the joint amount for a return that is not one (`certainJointReturn ? Amount : CertainJointReturnAmount`); with MaximumLimitation.Authority citing vacant-land-two-year-rule-disregard's `§ 1.121-1(b)(3)(ii)(B)`; and with the handler gating the day before the caller's date (`request.SaleOrExchangeDate?.AddDays(-1)`), so 24 December 2002 declined. Citing vacant-land-single-sale's locator did NOT turn it red: both entries cite `§ 1.121-1(b)(3)(ii)`, so the locator cannot tell them apart."
+      },
+      {
+        "test": "MaximumLimitationAmountTests.A_sale_on_a_certain_joint_return_is_limited_to_500000_citing_1_121_1_b_3_ii",
+        "mutation": "MaximumLimitations.CertainJointReturnAmount printed the single figure (`250_000m` for `500_000m`); this test went red. It went red too with `1_000_000m` for `500_000m`; with the rule ignoring the caller's answer (`Amount` for `certainJointReturn ? CertainJointReturnAmount : Amount`); with the answer inverted; with the value recording `false` for the caller's answer; and with Authority citing `§ 1.121-1(b)(3)(ii)(B)`."
+      },
+      {
+        "test": "MaximumLimitationAmountTests.A_sale_on_23_December_2002_declines_OutsideCurrentScope_citing_1_121_1_f",
+        "mutation": "Handlers.MaximumLimitationAmount never declined (`Applicability.Gate(...) is { } decline && false`), so a sale on 23 December 2002 resolved $250,000; this test went red. It went red too with the gate handed exclusion-of-gain's entry instead of this one (`MapEntries.ExclusionOfGain` for `MapEntries.MaximumLimitationAmount`), so the decline did not name 'maximum-limitation-amount'."
+      },
+      {
+        "test": "MaximumLimitationAmountTests.Without_a_sale_or_exchange_date_it_refuses_rather_than_assume_one",
+        "mutation": "Handlers.MaximumLimitationAmount defaulted a missing date to the effective date (`request.SaleOrExchangeDate ?? Applicability.ApplicableFrom`), so a request with no date resolved $250,000; this test went red. It went red too with the gate bypassed and a missing date treated as `default` (`request.SaleOrExchangeDate ?? default` with the decline dropped)."
+      },
+      {
+        "test": "MaximumLimitationAmountTests.Without_whether_the_return_is_a_certain_joint_return_it_refuses_rather_than_assume_one",
+        "mutation": "Handlers.MaximumLimitationAmount defaulted a missing joint-return answer to not a certain joint return (`request.CertainJointReturn ?? false` for `Demand(request.CertainJointReturn, ...)`), so the request resolved $250,000; this test went red. It went red too with the refusal's ParamName `\"certainJointReturn\"` for `nameof(request.CertainJointReturn)`."
+      },
+      {
+        "test": "MaximumLimitationAmountTests.The_dictionary_dispatch_carries_no_inputs_and_refuses",
+        "mutation": "Handlers.MaximumLimitationAmount defaulted a missing date to the effective date (`request.SaleOrExchangeDate ?? Applicability.ApplicableFrom`), so `Registry.Resolve(\"maximum-limitation-amount\", RuleRequest.Empty)` refused for the joint-return answer instead of the date; this test went red. It went red too with the gate bypassed and a missing date treated as `default`."
+      }
+    ]
+  },
   "ownership-and-use-aggregation": {
     "status": "implemented",
     "implementedIn": {
