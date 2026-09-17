@@ -159,5 +159,54 @@
         "mutation": "Handlers.MaximumLimitationAmount defaulted a missing date to the effective date (`request.SaleOrExchangeDate ?? Applicability.ApplicableFrom`), so `Registry.Resolve(\"maximum-limitation-amount\", RuleRequest.Empty)` refused for the joint-return answer instead of the date; this test went red. It went red too with the gate bypassed and a missing date treated as `default`."
       }
     ]
+  },
+  "ownership-and-use-aggregation": {
+    "status": "implemented",
+    "implementedIn": {
+      "ruleset": "tax-121-principal-residence",
+      "version": 1
+    },
+    "tests": [
+      {
+        "test": "OwnershipAndUseAggregationTests.The_value_is_2_years_as_24_full_months_or_730_days_citing_1_121_1_c",
+        "mutation": "TwoYears.Years set to 1 (`Years = 1` for `Years = 2`); this test went red and every other test of this entry stayed green. It went red too with TwoYears.FullMonths 23 for 24; with TwoYears.Days 729 for `365 * 2`; with TwoYears.Days a leap-year two years (`366 + 365` for `365 * 2`); and with TwoYearAggregate.Authority citing exclusion-of-gain's `§ 1.121-1(a)` (`MapEntries.ExclusionOfGain.Locator`). Citing ownership-and-use-nonconcurrent's locator (`MapEntries.OwnershipAndUseNonconcurrent.Locator`) did NOT turn it red: both entries cite `§ 1.121-1(c)`, so the locator cannot tell them apart."
+      },
+      {
+        "test": "OwnershipAndUseAggregationTests.Twenty_four_full_months_establish_the_two_years",
+        "mutation": "IsEstablishedByFullMonths excluded the threshold itself (`fullMonths > FullMonths` for `fullMonths >= FullMonths`); this test went red. It went red too with the months compared to the day count (`fullMonths >= Days`)."
+      },
+      {
+        "test": "OwnershipAndUseAggregationTests.Twenty_three_full_months_do_not_by_months",
+        "mutation": "IsEstablishedByFullMonths answered true for every count (`true` for `fullMonths >= FullMonths`); this test went red. It went red too with TwoYears.FullMonths 23 for 24."
+      },
+      {
+        "test": "OwnershipAndUseAggregationTests.Twenty_five_full_months_establish_the_two_years",
+        "mutation": "IsEstablishedByFullMonths held only at exactly the threshold (`fullMonths == FullMonths` for `fullMonths >= FullMonths`); this test went red and every other test of this entry stayed green. It went red too with the months compared to the day count (`fullMonths >= Days`)."
+      },
+      {
+        "test": "OwnershipAndUseAggregationTests.Seven_hundred_thirty_days_establish_the_two_years",
+        "mutation": "IsEstablishedByDays excluded the threshold itself (`days > Days` for `days >= Days`); this test went red. It went red too with TwoYears.Days a leap-year two years (`366 + 365` for `365 * 2`)."
+      },
+      {
+        "test": "OwnershipAndUseAggregationTests.Seven_hundred_twenty_nine_days_do_not_by_days",
+        "mutation": "IsEstablishedByDays answered true for every count (`true` for `days >= Days`); this test went red. It went red too with the days compared to the month count (`days >= FullMonths`), and with TwoYears.Days 729 for `365 * 2`."
+      },
+      {
+        "test": "OwnershipAndUseAggregationTests.Seven_hundred_thirty_one_days_establish_the_two_years",
+        "mutation": "IsEstablishedByDays held only at exactly the threshold (`days == Days` for `days >= Days`); this test went red and every other test of this entry stayed green."
+      },
+      {
+        "test": "OwnershipAndUseAggregationTests.A_sale_on_23_December_2002_declines_OutsideCurrentScope_citing_1_121_1_f",
+        "mutation": "TwoYears.For gated the effective date instead of the caller's date (`Applicability.Gate(MapEntries.OwnershipAndUseAggregation, Applicability.ApplicableFrom)` for `..., saleOrExchangeDate)`), so a 2002-12-23 sale resolved the value; this test went red. It went red too with the gate naming effective-date instead of this entry (`Gate(MapEntries.EffectiveDate, ...)`)."
+      },
+      {
+        "test": "OwnershipAndUseAggregationTests.Without_a_sale_or_exchange_date_it_refuses_rather_than_assume_one",
+        "mutation": "TwoYears.For defaulted a missing date to the effective date (`saleOrExchangeDate ?? Applicability.ApplicableFrom` for `saleOrExchangeDate`), so a request with no date resolved the value; this test went red. It went red too with the gate evaluating the effective date instead of the caller's date, and with the gate naming effective-date instead of this entry in the refusal."
+      },
+      {
+        "test": "OwnershipAndUseAggregationTests.The_dictionary_dispatch_carries_no_date_and_refuses_the_same_way",
+        "mutation": "TwoYears.For defaulted a missing date to the effective date (`saleOrExchangeDate ?? Applicability.ApplicableFrom` for `saleOrExchangeDate`), so `Registry.Resolve(\"ownership-and-use-aggregation\", RuleRequest.Empty)` resolved the value; this test went red. It went red too with the gate evaluating the effective date instead of the caller's date."
+      }
+    ]
   }
 }

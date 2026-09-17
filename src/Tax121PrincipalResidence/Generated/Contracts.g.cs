@@ -272,8 +272,8 @@ internal static partial class Handlers
     /// <summary>A loss on one of two combined transactions and the excludable gain (<c>combined-sale-nets-dwelling-loss</c>): optional.</summary>
     static partial void CombinedSaleNetsDwellingLoss(global::Tax121PrincipalResidence.Requests.CombinedSaleNetsDwellingLossRequest request, ref Resolution<object>? resolution);
 
-    /// <summary>Two years as 24 months or 730 days (<c>ownership-and-use-aggregation</c>): optional.</summary>
-    static partial void OwnershipAndUseAggregation(global::Tax121PrincipalResidence.Requests.OwnershipAndUseAggregationRequest request, ref Resolution<object>? resolution);
+    /// <summary>Two years as 24 months or 730 days (<c>ownership-and-use-aggregation</c>): required, the entry is implemented.</summary>
+    internal static partial Resolution<object> OwnershipAndUseAggregation(global::Tax121PrincipalResidence.Requests.OwnershipAndUseAggregationRequest request);
 
     /// <summary>Ownership and use need not be concurrent (<c>ownership-and-use-nonconcurrent</c>): optional.</summary>
     static partial void OwnershipAndUseNonconcurrent(global::Tax121PrincipalResidence.Requests.OwnershipAndUseNonconcurrentRequest request, ref Resolution<object>? resolution);
@@ -397,7 +397,7 @@ internal static partial class Handlers
                 CombinedSaleNetsDwellingLoss(request as global::Tax121PrincipalResidence.Requests.CombinedSaleNetsDwellingLossRequest ?? new(assertions), ref resolution);
                 break;
             case "ownership-and-use-aggregation":
-                OwnershipAndUseAggregation(request as global::Tax121PrincipalResidence.Requests.OwnershipAndUseAggregationRequest ?? new(assertions), ref resolution);
+                resolution = OwnershipAndUseAggregation(request as global::Tax121PrincipalResidence.Requests.OwnershipAndUseAggregationRequest ?? new(assertions));
                 break;
             case "ownership-and-use-nonconcurrent":
                 OwnershipAndUseNonconcurrent(request as global::Tax121PrincipalResidence.Requests.OwnershipAndUseNonconcurrentRequest ?? new(assertions), ref resolution);
@@ -483,7 +483,7 @@ internal static partial class Handlers
         "vacant-land-amended-return" => Hooked("VacantLandAmendedReturn", typeof(global::Tax121PrincipalResidence.Requests.VacantLandAmendedReturnRequest)),
         "examples-b" => Hooked("ExamplesB", typeof(global::Tax121PrincipalResidence.Requests.ExamplesBRequest)),
         "combined-sale-nets-dwelling-loss" => Hooked("CombinedSaleNetsDwellingLoss", typeof(global::Tax121PrincipalResidence.Requests.CombinedSaleNetsDwellingLossRequest)),
-        "ownership-and-use-aggregation" => Hooked("OwnershipAndUseAggregation", typeof(global::Tax121PrincipalResidence.Requests.OwnershipAndUseAggregationRequest)),
+        "ownership-and-use-aggregation" => true,
         "ownership-and-use-nonconcurrent" => Hooked("OwnershipAndUseNonconcurrent", typeof(global::Tax121PrincipalResidence.Requests.OwnershipAndUseNonconcurrentRequest)),
         "uniformed-services-suspension-absent" => Hooked("UniformedServicesSuspensionAbsent", typeof(global::Tax121PrincipalResidence.Requests.UniformedServicesSuspensionAbsentRequest)),
         "use-requires-occupancy" => Hooked("UseRequiresOccupancy", typeof(global::Tax121PrincipalResidence.Requests.UseRequiresOccupancyRequest)),
