@@ -152,8 +152,8 @@ public sealed class CorrespondenceTests
         AssertDeclines("principal-residence-majority-of-time", UnresolvedReason.UnsupportedRule, EntryPoints.PrincipalResidenceMajorityOfTime.Resolve(global::Tax121PrincipalResidence.Requests.PrincipalResidenceMajorityOfTimeRequest.Empty), new SourceLocator("cfr-26-1.121-1", "§ 1.121-1(b)(2)"));
 
     [Fact]
-    public void principal_residence_factors__declines_UnsupportedRule_row_2() =>
-        AssertDeclines("principal-residence-factors", UnresolvedReason.UnsupportedRule, EntryPoints.PrincipalResidenceFactors.Resolve(global::Tax121PrincipalResidence.Requests.PrincipalResidenceFactorsRequest.Empty), new SourceLocator("cfr-26-1.121-1", "§ 1.121-1(b)(2)"));
+    public void principal_residence_factors__is_implemented_so_a_hand_written_handler_answers_it() =>
+        Assert.True(Registry.HasImplementation("principal-residence-factors"), "principal-residence-factors is implemented in the overlay and has no [Implements] handler");
 
     [Fact]
     public void vacant_land_not_principal_residence__declines_UnsupportedRule_row_2() =>
