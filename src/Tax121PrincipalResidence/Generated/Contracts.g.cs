@@ -224,11 +224,11 @@ internal static partial class Handlers
     /// <summary>Owned and used as a principal residence for 2 of the 5 years ending on the sale (<c>ownership-and-use-test</c>): optional.</summary>
     static partial void OwnershipAndUseTest(global::Tax121PrincipalResidence.Requests.OwnershipAndUseTestRequest request, ref Resolution<object>? resolution);
 
-    /// <summary>Whether property is used as a residence (<c>residence-facts-and-circumstances</c>): optional.</summary>
-    static partial void ResidenceFactsAndCircumstances(global::Tax121PrincipalResidence.Requests.ResidenceFactsAndCircumstancesRequest request, ref Resolution<object>? resolution);
+    /// <summary>Whether property is used as a residence (<c>residence-facts-and-circumstances</c>): required, the entry is implemented.</summary>
+    internal static partial Resolution<object> ResidenceFactsAndCircumstances(global::Tax121PrincipalResidence.Requests.ResidenceFactsAndCircumstancesRequest request);
 
-    /// <summary>Property that may be a residence (<c>residence-may-include</c>): optional.</summary>
-    static partial void ResidenceMayInclude(global::Tax121PrincipalResidence.Requests.ResidenceMayIncludeRequest request, ref Resolution<object>? resolution);
+    /// <summary>Property that may be a residence (<c>residence-may-include</c>): required, the entry is implemented.</summary>
+    internal static partial Resolution<object> ResidenceMayInclude(global::Tax121PrincipalResidence.Requests.ResidenceMayIncludeRequest request);
 
     /// <summary>A co-operative apartment as a residence (<c>residence-cooperative-apartment</c>): optional.</summary>
     static partial void ResidenceCooperativeApartment(global::Tax121PrincipalResidence.Requests.ResidenceCooperativeApartmentRequest request, ref Resolution<object>? resolution);
@@ -349,10 +349,10 @@ internal static partial class Handlers
                 OwnershipAndUseTest(request as global::Tax121PrincipalResidence.Requests.OwnershipAndUseTestRequest ?? new(assertions), ref resolution);
                 break;
             case "residence-facts-and-circumstances":
-                ResidenceFactsAndCircumstances(request as global::Tax121PrincipalResidence.Requests.ResidenceFactsAndCircumstancesRequest ?? new(assertions), ref resolution);
+                resolution = ResidenceFactsAndCircumstances(request as global::Tax121PrincipalResidence.Requests.ResidenceFactsAndCircumstancesRequest ?? new(assertions));
                 break;
             case "residence-may-include":
-                ResidenceMayInclude(request as global::Tax121PrincipalResidence.Requests.ResidenceMayIncludeRequest ?? new(assertions), ref resolution);
+                resolution = ResidenceMayInclude(request as global::Tax121PrincipalResidence.Requests.ResidenceMayIncludeRequest ?? new(assertions));
                 break;
             case "residence-cooperative-apartment":
                 ResidenceCooperativeApartment(request as global::Tax121PrincipalResidence.Requests.ResidenceCooperativeApartmentRequest ?? new(assertions), ref resolution);
@@ -467,8 +467,8 @@ internal static partial class Handlers
     {
         "exclusion-of-gain" => Hooked("ExclusionOfGain", typeof(global::Tax121PrincipalResidence.Requests.ExclusionOfGainRequest)),
         "ownership-and-use-test" => Hooked("OwnershipAndUseTest", typeof(global::Tax121PrincipalResidence.Requests.OwnershipAndUseTestRequest)),
-        "residence-facts-and-circumstances" => Hooked("ResidenceFactsAndCircumstances", typeof(global::Tax121PrincipalResidence.Requests.ResidenceFactsAndCircumstancesRequest)),
-        "residence-may-include" => Hooked("ResidenceMayInclude", typeof(global::Tax121PrincipalResidence.Requests.ResidenceMayIncludeRequest)),
+        "residence-facts-and-circumstances" => true,
+        "residence-may-include" => true,
         "residence-cooperative-apartment" => Hooked("ResidenceCooperativeApartment", typeof(global::Tax121PrincipalResidence.Requests.ResidenceCooperativeApartmentRequest)),
         "residence-excludes-personal-property" => Hooked("ResidenceExcludesPersonalProperty", typeof(global::Tax121PrincipalResidence.Requests.ResidenceExcludesPersonalPropertyRequest)),
         "principal-residence-facts-and-circumstances" => Hooked("PrincipalResidenceFactsAndCircumstances", typeof(global::Tax121PrincipalResidence.Requests.PrincipalResidenceFactsAndCircumstancesRequest)),

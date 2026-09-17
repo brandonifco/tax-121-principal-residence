@@ -128,12 +128,12 @@ public sealed class CorrespondenceTests
         AssertDeclines("ownership-and-use-test", UnresolvedReason.UnsupportedRule, EntryPoints.OwnershipAndUseTest.Resolve(global::Tax121PrincipalResidence.Requests.OwnershipAndUseTestRequest.Empty), new SourceLocator("cfr-26-1.121-1", "§ 1.121-1(a)"));
 
     [Fact]
-    public void residence_facts_and_circumstances__declines_UnsupportedRule_row_2() =>
-        AssertDeclines("residence-facts-and-circumstances", UnresolvedReason.UnsupportedRule, EntryPoints.ResidenceFactsAndCircumstances.Resolve(global::Tax121PrincipalResidence.Requests.ResidenceFactsAndCircumstancesRequest.Empty), new SourceLocator("cfr-26-1.121-1", "§ 1.121-1(b)"));
+    public void residence_facts_and_circumstances__is_implemented_so_a_hand_written_handler_answers_it() =>
+        Assert.True(Registry.HasImplementation("residence-facts-and-circumstances"), "residence-facts-and-circumstances is implemented in the overlay and has no [Implements] handler");
 
     [Fact]
-    public void residence_may_include__declines_UnsupportedRule_row_2() =>
-        AssertDeclines("residence-may-include", UnresolvedReason.UnsupportedRule, EntryPoints.ResidenceMayInclude.Resolve(global::Tax121PrincipalResidence.Requests.ResidenceMayIncludeRequest.Empty), new SourceLocator("cfr-26-1.121-1", "§ 1.121-1(b)"));
+    public void residence_may_include__is_implemented_so_a_hand_written_handler_answers_it() =>
+        Assert.True(Registry.HasImplementation("residence-may-include"), "residence-may-include is implemented in the overlay and has no [Implements] handler");
 
     [Fact]
     public void residence_cooperative_apartment__declines_UnsupportedRule_row_2() =>
