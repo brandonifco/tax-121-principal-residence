@@ -97,5 +97,34 @@
         "mutation": "Handlers.ResidenceMayInclude defaulted a missing date to the effective date (`request.SaleOrExchangeDate ?? Applicability.ApplicableFrom` for `request.SaleOrExchangeDate`), so `Registry.Resolve(\"residence-may-include\", RuleRequest.Empty)` resolved the list; this test went red."
       }
     ]
+  },
+  "principal-residence-factors": {
+    "status": "implemented",
+    "implementedIn": {
+      "ruleset": "tax-121-principal-residence",
+      "version": 1
+    },
+    "tests": [
+      {
+        "test": "PrincipalResidenceFactorsEntryPointTests.The_list_is_the_six_factors_as_printed_in_order_citing_1_121_1_b_2",
+        "mutation": "RelevantFactors.Factors dropped factor (vi) (the religious organizations and recreational clubs line removed); this test went red. It went red too with factor (i) dropped, with factor (iii) losing `, and voter registration card`, with factor (iv)'s text replaced by factor (v)'s (`The location of the taxpayer's banks` for `The taxpayer's mailing address for bills and correspondence`), with factor (ii)'s numeral `2` for `ii`, and with RelevantFactors.Authority citing effective-date's `§ 1.121-1(f)` (`MapEntries.EffectiveDate.Locator` for `MapEntries.PrincipalResidenceFactors.Locator`). Citing principal-residence-facts-and-circumstances' locator (`MapEntries.PrincipalResidenceFactsAndCircumstances.Locator`) did NOT turn it red: both entries cite `§ 1.121-1(b)(2)`, so the locator cannot tell them apart."
+      },
+      {
+        "test": "PrincipalResidenceFactorsEntryPointTests.The_six_are_not_the_whole_list",
+        "mutation": "RelevantFactors.IsExhaustive returned `true` for `false`, stating the six as the whole list although the corpus says the factors \"include, but are not limited to\" them; this test went red and every other test of this entry stayed green."
+      },
+      {
+        "test": "PrincipalResidenceFactorsEntryPointTests.A_sale_on_23_December_2002_declines_OutsideCurrentScope_citing_1_121_1_f_and_naming_this_entry",
+        "mutation": "Handlers.PrincipalResidenceFactors never took the gate's decline (`Applicability.Gate(MapEntries.PrincipalResidenceFactors, request.SaleOrExchangeDate ?? default) is { } decline && false` for `Applicability.Gate(MapEntries.PrincipalResidenceFactors, request.SaleOrExchangeDate) is { } decline`), so a sale on 23 December 2002 resolved the list; this test went red. It went red too with the handler gating as effective-date instead of its own entry (`Applicability.Gate(MapEntries.EffectiveDate, ...` for `Applicability.Gate(MapEntries.PrincipalResidenceFactors, ...`)."
+      },
+      {
+        "test": "PrincipalResidenceFactorsEntryPointTests.Without_a_sale_or_exchange_date_it_refuses_rather_than_assume_one",
+        "mutation": "Handlers.PrincipalResidenceFactors defaulted a missing date to the effective date (`request.SaleOrExchangeDate ?? Applicability.ApplicableFrom` for `request.SaleOrExchangeDate`), so a request with no date resolved the list; this test went red. It went red too with the gate's decline never taken (the `?? default ... && false` mutation above), and with the handler gating as effective-date, so the refusal named `'effective-date'` instead of `'principal-residence-factors'`."
+      },
+      {
+        "test": "PrincipalResidenceFactorsEntryPointTests.The_dictionary_dispatch_carries_no_date_and_refuses_the_same_way",
+        "mutation": "Handlers.PrincipalResidenceFactors defaulted a missing date to the effective date (`request.SaleOrExchangeDate ?? Applicability.ApplicableFrom` for `request.SaleOrExchangeDate`), so `Registry.Resolve(\"principal-residence-factors\", RuleRequest.Empty)` resolved the list; this test went red. It went red too with the gate's decline never taken (`request.SaleOrExchangeDate ?? default` with `&& false`)."
+      }
+    ]
   }
 }

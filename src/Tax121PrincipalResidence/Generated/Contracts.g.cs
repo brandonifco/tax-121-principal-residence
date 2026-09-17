@@ -242,8 +242,8 @@ internal static partial class Handlers
     /// <summary>The majority-of-time default for two alternating properties (<c>principal-residence-majority-of-time</c>): optional.</summary>
     static partial void PrincipalResidenceMajorityOfTime(global::Tax121PrincipalResidence.Requests.PrincipalResidenceMajorityOfTimeRequest request, ref Resolution<object>? resolution);
 
-    /// <summary>The six relevant factors (<c>principal-residence-factors</c>): optional.</summary>
-    static partial void PrincipalResidenceFactors(global::Tax121PrincipalResidence.Requests.PrincipalResidenceFactorsRequest request, ref Resolution<object>? resolution);
+    /// <summary>The six relevant factors (<c>principal-residence-factors</c>): required, the entry is implemented.</summary>
+    internal static partial Resolution<object> PrincipalResidenceFactors(global::Tax121PrincipalResidence.Requests.PrincipalResidenceFactorsRequest request);
 
     /// <summary>When vacant land is sold as a principal residence (<c>vacant-land-not-principal-residence</c>): optional.</summary>
     static partial void VacantLandNotPrincipalResidence(global::Tax121PrincipalResidence.Requests.VacantLandNotPrincipalResidenceRequest request, ref Resolution<object>? resolution);
@@ -367,7 +367,7 @@ internal static partial class Handlers
                 PrincipalResidenceMajorityOfTime(request as global::Tax121PrincipalResidence.Requests.PrincipalResidenceMajorityOfTimeRequest ?? new(assertions), ref resolution);
                 break;
             case "principal-residence-factors":
-                PrincipalResidenceFactors(request as global::Tax121PrincipalResidence.Requests.PrincipalResidenceFactorsRequest ?? new(assertions), ref resolution);
+                resolution = PrincipalResidenceFactors(request as global::Tax121PrincipalResidence.Requests.PrincipalResidenceFactorsRequest ?? new(assertions));
                 break;
             case "vacant-land-not-principal-residence":
                 VacantLandNotPrincipalResidence(request as global::Tax121PrincipalResidence.Requests.VacantLandNotPrincipalResidenceRequest ?? new(assertions), ref resolution);
@@ -473,7 +473,7 @@ internal static partial class Handlers
         "residence-excludes-personal-property" => Hooked("ResidenceExcludesPersonalProperty", typeof(global::Tax121PrincipalResidence.Requests.ResidenceExcludesPersonalPropertyRequest)),
         "principal-residence-facts-and-circumstances" => Hooked("PrincipalResidenceFactsAndCircumstances", typeof(global::Tax121PrincipalResidence.Requests.PrincipalResidenceFactsAndCircumstancesRequest)),
         "principal-residence-majority-of-time" => Hooked("PrincipalResidenceMajorityOfTime", typeof(global::Tax121PrincipalResidence.Requests.PrincipalResidenceMajorityOfTimeRequest)),
-        "principal-residence-factors" => Hooked("PrincipalResidenceFactors", typeof(global::Tax121PrincipalResidence.Requests.PrincipalResidenceFactorsRequest)),
+        "principal-residence-factors" => true,
         "vacant-land-not-principal-residence" => Hooked("VacantLandNotPrincipalResidence", typeof(global::Tax121PrincipalResidence.Requests.VacantLandNotPrincipalResidenceRequest)),
         "vacant-land-single-sale" => Hooked("VacantLandSingleSale", typeof(global::Tax121PrincipalResidence.Requests.VacantLandSingleSaleRequest)),
         "maximum-limitation-amount" => Hooked("MaximumLimitationAmount", typeof(global::Tax121PrincipalResidence.Requests.MaximumLimitationAmountRequest)),

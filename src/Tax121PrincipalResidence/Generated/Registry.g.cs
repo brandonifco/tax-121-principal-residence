@@ -145,7 +145,7 @@ public static class Registry
         new("residence-excludes-personal-property", EntryStatus.Mapped, CorrespondenceRow.NotBuilt, [MapEntries.ResidenceExcludesPersonalProperty.Locator]),
         new("principal-residence-facts-and-circumstances", EntryStatus.Mapped, CorrespondenceRow.NotBuilt, [MapEntries.PrincipalResidenceFactsAndCircumstances.Locator]),
         new("principal-residence-majority-of-time", EntryStatus.Mapped, CorrespondenceRow.NotBuilt, [MapEntries.PrincipalResidenceMajorityOfTime.Locator]),
-        new("principal-residence-factors", EntryStatus.Mapped, CorrespondenceRow.NotBuilt, [MapEntries.PrincipalResidenceFactors.Locator]),
+        new("principal-residence-factors", EntryStatus.Implemented, CorrespondenceRow.None, [MapEntries.PrincipalResidenceFactors.Locator]),
         new("vacant-land-not-principal-residence", EntryStatus.Mapped, CorrespondenceRow.NotBuilt, [MapEntries.VacantLandNotPrincipalResidence.Locator]),
         new("vacant-land-single-sale", EntryStatus.Mapped, CorrespondenceRow.NotBuilt, [MapEntries.VacantLandSingleSale.Locator]),
         new("maximum-limitation-amount", EntryStatus.Mapped, CorrespondenceRow.NotBuilt, [MapEntries.MaximumLimitationAmount.Locator]),
