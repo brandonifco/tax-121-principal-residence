@@ -39,5 +39,38 @@
         "mutation": "Applicability.Gate defaulted a missing date to the effective date (`saleOrExchangeDate ?? ApplicableFrom` for `?? throw new ArgumentException(...)`), so a missing date proceeded; this test went red. It went red too with the refusal's ParamName `\"saleOrExchangeDate\"` for `nameof(Requests.EffectiveDateRequest.SaleOrExchangeDate)`, and with the gated entry's id dropped from its message."
       }
     ]
+  },
+  "use-requires-occupancy": {
+    "status": "implemented",
+    "implementedIn": {
+      "ruleset": "tax-121-principal-residence",
+      "version": 1
+    },
+    "tests": [
+      {
+        "test": "UseRequiresOccupancyTests.Owning_without_occupying_fails_the_use_leg_while_the_ownership_leg_holds_citing_1_121_1_c_2",
+        "mutation": "OccupancyFinding.OccupancyRequirementMet let ownership stand in for occupancy (`Occupied || Owned` for `Occupied`), so an owner who did not live there met the use leg; this test went red. It went red too with the requirement always met (`true`), with OccupancyFinding.Authority citing ownership-and-use-test's `§ 1.121-1(a)` (`MapEntries.OwnershipAndUseTest.Locator`), and with the finding recording occupancy as ownership (`new OccupancyFinding(occupied, occupied)`). Citing short-temporary-absences' locator did NOT turn it red: both entries cite `§ 1.121-1(c)(2)`, so the locator cannot tell them apart."
+      },
+      {
+        "test": "UseRequiresOccupancyTests.Occupying_meets_the_occupancy_requirement_whether_or_not_the_taxpayer_owned",
+        "mutation": "OccupancyFinding.OccupancyRequirementMet also required ownership (`Occupied && Owned` for `Occupied`), so a taxpayer who occupied without owning failed; this test went red. It went red too with the requirement never met (`false`), with Occupancy.Of recording every taxpayer as owning (`new OccupancyFinding(true, occupied)`), and with it recording occupancy as ownership (`new OccupancyFinding(occupied, occupied)`)."
+      },
+      {
+        "test": "UseRequiresOccupancyTests.A_sale_on_23_December_2002_declines_OutsideCurrentScope_citing_1_121_1_f",
+        "mutation": "Handlers.UseRequiresOccupancy gated every sale that had a date as if it were on 2020-01-01 (`request.SaleOrExchangeDate is null ? null : new DateOnly(2020, 1, 1)` for `request.SaleOrExchangeDate`), so a sale on 2002-12-23 resolved instead of declining; this test went red. It went red too with the handler passing effective-date's entry to the gate instead of its own (`MapEntries.EffectiveDate` for `MapEntries.UseRequiresOccupancy`), so the decline named the wrong entry."
+      },
+      {
+        "test": "UseRequiresOccupancyTests.Without_a_sale_or_exchange_date_it_refuses_rather_than_assume_one",
+        "mutation": "Handlers.UseRequiresOccupancy defaulted a missing date to the effective date (`request.SaleOrExchangeDate ?? Applicability.ApplicableFrom` for `request.SaleOrExchangeDate`), so a request with no date resolved; this test went red."
+      },
+      {
+        "test": "UseRequiresOccupancyTests.Without_whether_the_taxpayer_occupied_it_refuses_rather_than_assume_either_answer",
+        "mutation": "Handlers.UseRequiresOccupancy defaulted a missing occupancy fact to not occupied (`request.TaxpayerOccupied ?? false` for `Demand(request.TaxpayerOccupied, ...)`); this test went red. It went red too with the default `?? true`, and with the refusal naming `TaxpayerOwned` instead of `TaxpayerOccupied`."
+      },
+      {
+        "test": "UseRequiresOccupancyTests.Without_whether_the_taxpayer_owned_it_refuses_rather_than_assume_either_answer",
+        "mutation": "Handlers.UseRequiresOccupancy defaulted a missing ownership fact to not owned (`request.TaxpayerOwned ?? false` for `Demand(request.TaxpayerOwned, ...)`); this test went red. It went red too with the default `?? true`."
+      }
+    ]
   }
 }

@@ -204,8 +204,8 @@ public sealed class CorrespondenceTests
         AssertDeclines("uniformed-services-suspension-absent", UnresolvedReason.OutsideCurrentScope, EntryPoints.UniformedServicesSuspensionAbsent.Resolve(global::Tax121PrincipalResidence.Requests.UniformedServicesSuspensionAbsentRequest.Empty), new SourceLocator("cfr-26-1.121-1", "§ 1.121-1(c)"));
 
     [Fact]
-    public void use_requires_occupancy__declines_UnsupportedRule_row_2() =>
-        AssertDeclines("use-requires-occupancy", UnresolvedReason.UnsupportedRule, EntryPoints.UseRequiresOccupancy.Resolve(global::Tax121PrincipalResidence.Requests.UseRequiresOccupancyRequest.Empty), new SourceLocator("cfr-26-1.121-1", "§ 1.121-1(c)(2)"));
+    public void use_requires_occupancy__is_implemented_so_a_hand_written_handler_answers_it() =>
+        Assert.True(Registry.HasImplementation("use-requires-occupancy"), "use-requires-occupancy is implemented in the overlay and has no [Implements] handler");
 
     [Fact]
     public void short_temporary_absences__declines_UnsupportedRule_row_2() =>
