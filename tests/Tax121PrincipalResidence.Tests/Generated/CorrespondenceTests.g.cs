@@ -164,8 +164,8 @@ public sealed class CorrespondenceTests
         AssertDeclines("vacant-land-single-sale", UnresolvedReason.UnsupportedRule, EntryPoints.VacantLandSingleSale.Resolve(global::Tax121PrincipalResidence.Requests.VacantLandSingleSaleRequest.Empty), new SourceLocator("cfr-26-1.121-1", "§ 1.121-1(b)(3)(ii)"));
 
     [Fact]
-    public void maximum_limitation_amount__declines_UnsupportedRule_row_2() =>
-        AssertDeclines("maximum-limitation-amount", UnresolvedReason.UnsupportedRule, EntryPoints.MaximumLimitationAmount.Resolve(global::Tax121PrincipalResidence.Requests.MaximumLimitationAmountRequest.Empty), new SourceLocator("cfr-26-1.121-1", "§ 1.121-1(b)(3)(ii)"));
+    public void maximum_limitation_amount__is_implemented_so_a_hand_written_handler_answers_it() =>
+        Assert.True(Registry.HasImplementation("maximum-limitation-amount"), "maximum-limitation-amount is implemented in the overlay and has no [Implements] handler");
 
     [Fact]
     public void vacant_land_ordering_across_years__declines_UnsupportedRule_row_2() =>

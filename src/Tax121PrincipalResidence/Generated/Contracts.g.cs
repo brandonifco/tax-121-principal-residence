@@ -251,8 +251,8 @@ internal static partial class Handlers
     /// <summary>Vacant land and the dwelling unit are one sale (<c>vacant-land-single-sale</c>): optional.</summary>
     static partial void VacantLandSingleSale(global::Tax121PrincipalResidence.Requests.VacantLandSingleSaleRequest request, ref Resolution<object>? resolution);
 
-    /// <summary>The maximum limitation amount for a combined sale (<c>maximum-limitation-amount</c>): optional.</summary>
-    static partial void MaximumLimitationAmount(global::Tax121PrincipalResidence.Requests.MaximumLimitationAmountRequest request, ref Resolution<object>? resolution);
+    /// <summary>The maximum limitation amount for a combined sale (<c>maximum-limitation-amount</c>): required, the entry is implemented.</summary>
+    internal static partial Resolution<object> MaximumLimitationAmount(global::Tax121PrincipalResidence.Requests.MaximumLimitationAmountRequest request);
 
     /// <summary>Ordering the exclusion across taxable years (<c>vacant-land-ordering-across-years</c>): optional.</summary>
     static partial void VacantLandOrderingAcrossYears(global::Tax121PrincipalResidence.Requests.VacantLandOrderingAcrossYearsRequest request, ref Resolution<object>? resolution);
@@ -376,7 +376,7 @@ internal static partial class Handlers
                 VacantLandSingleSale(request as global::Tax121PrincipalResidence.Requests.VacantLandSingleSaleRequest ?? new(assertions), ref resolution);
                 break;
             case "maximum-limitation-amount":
-                MaximumLimitationAmount(request as global::Tax121PrincipalResidence.Requests.MaximumLimitationAmountRequest ?? new(assertions), ref resolution);
+                resolution = MaximumLimitationAmount(request as global::Tax121PrincipalResidence.Requests.MaximumLimitationAmountRequest ?? new(assertions));
                 break;
             case "vacant-land-ordering-across-years":
                 VacantLandOrderingAcrossYears(request as global::Tax121PrincipalResidence.Requests.VacantLandOrderingAcrossYearsRequest ?? new(assertions), ref resolution);
@@ -476,7 +476,7 @@ internal static partial class Handlers
         "principal-residence-factors" => true,
         "vacant-land-not-principal-residence" => Hooked("VacantLandNotPrincipalResidence", typeof(global::Tax121PrincipalResidence.Requests.VacantLandNotPrincipalResidenceRequest)),
         "vacant-land-single-sale" => Hooked("VacantLandSingleSale", typeof(global::Tax121PrincipalResidence.Requests.VacantLandSingleSaleRequest)),
-        "maximum-limitation-amount" => Hooked("MaximumLimitationAmount", typeof(global::Tax121PrincipalResidence.Requests.MaximumLimitationAmountRequest)),
+        "maximum-limitation-amount" => true,
         "vacant-land-ordering-across-years" => Hooked("VacantLandOrderingAcrossYears", typeof(global::Tax121PrincipalResidence.Requests.VacantLandOrderingAcrossYearsRequest)),
         "vacant-land-two-year-rule-disregard" => Hooked("VacantLandTwoYearRuleDisregard", typeof(global::Tax121PrincipalResidence.Requests.VacantLandTwoYearRuleDisregardRequest)),
         "vacant-land-sold-first-is-taxable" => Hooked("VacantLandSoldFirstIsTaxable", typeof(global::Tax121PrincipalResidence.Requests.VacantLandSoldFirstIsTaxableRequest)),

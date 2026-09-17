@@ -126,5 +126,38 @@
         "mutation": "Handlers.PrincipalResidenceFactors defaulted a missing date to the effective date (`request.SaleOrExchangeDate ?? Applicability.ApplicableFrom` for `request.SaleOrExchangeDate`), so `Registry.Resolve(\"principal-residence-factors\", RuleRequest.Empty)` resolved the list; this test went red. It went red too with the gate's decline never taken (`request.SaleOrExchangeDate ?? default` with `&& false`)."
       }
     ]
+  },
+  "maximum-limitation-amount": {
+    "status": "implemented",
+    "implementedIn": {
+      "ruleset": "tax-121-principal-residence",
+      "version": 1
+    },
+    "tests": [
+      {
+        "test": "MaximumLimitationAmountTests.A_sale_on_24_December_2002_not_on_a_certain_joint_return_is_limited_to_250000_citing_1_121_1_b_3_ii",
+        "mutation": "MaximumLimitations.Amount printed the wrong figure (`25_000m` for `250_000m`); this test went red. It went red too with `250_000.01m` for `250_000m`; with the rule choosing the joint amount for a return that is not one (`certainJointReturn ? Amount : CertainJointReturnAmount`); with MaximumLimitation.Authority citing vacant-land-two-year-rule-disregard's `§ 1.121-1(b)(3)(ii)(B)`; and with the handler gating the day before the caller's date (`request.SaleOrExchangeDate?.AddDays(-1)`), so 24 December 2002 declined. Citing vacant-land-single-sale's locator did NOT turn it red: both entries cite `§ 1.121-1(b)(3)(ii)`, so the locator cannot tell them apart."
+      },
+      {
+        "test": "MaximumLimitationAmountTests.A_sale_on_a_certain_joint_return_is_limited_to_500000_citing_1_121_1_b_3_ii",
+        "mutation": "MaximumLimitations.CertainJointReturnAmount printed the single figure (`250_000m` for `500_000m`); this test went red. It went red too with `1_000_000m` for `500_000m`; with the rule ignoring the caller's answer (`Amount` for `certainJointReturn ? CertainJointReturnAmount : Amount`); with the answer inverted; with the value recording `false` for the caller's answer; and with Authority citing `§ 1.121-1(b)(3)(ii)(B)`."
+      },
+      {
+        "test": "MaximumLimitationAmountTests.A_sale_on_23_December_2002_declines_OutsideCurrentScope_citing_1_121_1_f",
+        "mutation": "Handlers.MaximumLimitationAmount never declined (`Applicability.Gate(...) is { } decline && false`), so a sale on 23 December 2002 resolved $250,000; this test went red. It went red too with the gate handed exclusion-of-gain's entry instead of this one (`MapEntries.ExclusionOfGain` for `MapEntries.MaximumLimitationAmount`), so the decline did not name 'maximum-limitation-amount'."
+      },
+      {
+        "test": "MaximumLimitationAmountTests.Without_a_sale_or_exchange_date_it_refuses_rather_than_assume_one",
+        "mutation": "Handlers.MaximumLimitationAmount defaulted a missing date to the effective date (`request.SaleOrExchangeDate ?? Applicability.ApplicableFrom`), so a request with no date resolved $250,000; this test went red. It went red too with the gate bypassed and a missing date treated as `default` (`request.SaleOrExchangeDate ?? default` with the decline dropped)."
+      },
+      {
+        "test": "MaximumLimitationAmountTests.Without_whether_the_return_is_a_certain_joint_return_it_refuses_rather_than_assume_one",
+        "mutation": "Handlers.MaximumLimitationAmount defaulted a missing joint-return answer to not a certain joint return (`request.CertainJointReturn ?? false` for `Demand(request.CertainJointReturn, ...)`), so the request resolved $250,000; this test went red. It went red too with the refusal's ParamName `\"certainJointReturn\"` for `nameof(request.CertainJointReturn)`."
+      },
+      {
+        "test": "MaximumLimitationAmountTests.The_dictionary_dispatch_carries_no_inputs_and_refuses",
+        "mutation": "Handlers.MaximumLimitationAmount defaulted a missing date to the effective date (`request.SaleOrExchangeDate ?? Applicability.ApplicableFrom`), so `Registry.Resolve(\"maximum-limitation-amount\", RuleRequest.Empty)` refused for the joint-return answer instead of the date; this test went red. It went red too with the gate bypassed and a missing date treated as `default`."
+      }
+    ]
   }
 }

@@ -148,7 +148,7 @@ public static class Registry
         new("principal-residence-factors", EntryStatus.Implemented, CorrespondenceRow.None, [MapEntries.PrincipalResidenceFactors.Locator]),
         new("vacant-land-not-principal-residence", EntryStatus.Mapped, CorrespondenceRow.NotBuilt, [MapEntries.VacantLandNotPrincipalResidence.Locator]),
         new("vacant-land-single-sale", EntryStatus.Mapped, CorrespondenceRow.NotBuilt, [MapEntries.VacantLandSingleSale.Locator]),
-        new("maximum-limitation-amount", EntryStatus.Mapped, CorrespondenceRow.NotBuilt, [MapEntries.MaximumLimitationAmount.Locator]),
+        new("maximum-limitation-amount", EntryStatus.Implemented, CorrespondenceRow.None, [MapEntries.MaximumLimitationAmount.Locator]),
         new("vacant-land-ordering-across-years", EntryStatus.Mapped, CorrespondenceRow.NotBuilt, [MapEntries.VacantLandOrderingAcrossYears.Locator]),
         new("vacant-land-two-year-rule-disregard", EntryStatus.Mapped, CorrespondenceRow.NotBuilt, [MapEntries.VacantLandTwoYearRuleDisregard.Locator]),
         new("vacant-land-sold-first-is-taxable", EntryStatus.Mapped, CorrespondenceRow.NotBuilt, [MapEntries.VacantLandSoldFirstIsTaxable.Locator]),

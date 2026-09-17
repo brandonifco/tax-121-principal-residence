@@ -215,87 +215,83 @@
     },
     {
       "path": "backlog/001-principal-residence-facts-and-circumstances.md",
-      "sha256": "666f72bc0fe499056f738ea170a484f1dd71d23f24fd2c5711ae1b5e62f6d59f"
+      "sha256": "23ab4982bcbb46af2dbd199c5c33bd6bb6a0dce1ed781ff7fbc37393e871195b"
     },
     {
       "path": "backlog/002-principal-residence-majority-of-time.md",
-      "sha256": "cea6230241c9ce10edb152dd4ef5c1b73bb8424786abcdafa24eaa6b4b4c906e"
+      "sha256": "48e3a87cf8673bfbe3b6d8e3477504cd5edc7f7eec096648e689753c5fe991e1"
     },
     {
       "path": "backlog/003-vacant-land-not-principal-residence.md",
-      "sha256": "5491723d8704123d3d7526c1eb558792d25eee46a823310a1d517175e7a538d2"
+      "sha256": "04011bce815760ad50c3f6dde0aefd712f657b5727ccba927bd9351d593dbe15"
     },
     {
       "path": "backlog/004-vacant-land-single-sale.md",
-      "sha256": "53ec72789af6d5f2d705633006be4a15528af392c92eb6efe441f0d0696b3cd0"
+      "sha256": "3c0f9445ca0faae8043c0dcba179c917867f5f0a8c9cc8b8e22fd608bb4b0abe"
     },
     {
-      "path": "backlog/005-maximum-limitation-amount.md",
-      "sha256": "0283740e9523ec0f42ba3b59c69ab292e2c150b401a0c2095fc2d0f7e98b5ed9"
+      "path": "backlog/005-vacant-land-two-year-rule-disregard.md",
+      "sha256": "8a6a1c0845948cc9620d88006c96f28d5e000518f8870c4f00536b9075844135"
     },
     {
-      "path": "backlog/006-vacant-land-two-year-rule-disregard.md",
-      "sha256": "2fea05001d6af324e14fe8a52eb04597bf82f3f3eb220633d6dcd2d2f7012870"
+      "path": "backlog/006-vacant-land-sold-first-is-taxable.md",
+      "sha256": "24d3b9e103eb0313d2ab5a2559914e1606d65084e81ee327f5438213d3493386"
     },
     {
-      "path": "backlog/007-vacant-land-sold-first-is-taxable.md",
-      "sha256": "fa1952801caad489d528a99bb1afd4a9e9cfc1e66da9c4e284d6bd07cf4ff287"
+      "path": "backlog/007-combined-sale-nets-dwelling-loss.md",
+      "sha256": "2a4e506cd0f0db87fdfb2772f9f7b78d3163628dc0d943df45c9d16dad2d0282"
     },
     {
-      "path": "backlog/008-combined-sale-nets-dwelling-loss.md",
-      "sha256": "159ca74094cf76d04328348c49382642d2be7b27e5280cef8ba947031a73cc4c"
+      "path": "backlog/008-ownership-and-use-aggregation.md",
+      "sha256": "e4a070c2197eb66f0a34cf617263954c2f1c66eccc94f5b0ac24c6c223a58218"
     },
     {
-      "path": "backlog/009-ownership-and-use-aggregation.md",
-      "sha256": "590fbab88446227754beef49a1106033e142b48e0de44b4ecd4c9ec703d2b3e1"
+      "path": "backlog/009-ownership-and-use-nonconcurrent.md",
+      "sha256": "a30ed97717ec906f0f31c894c9ee39fedd61fe61e4ee43ca202f9a284816cd94"
     },
     {
-      "path": "backlog/010-ownership-and-use-nonconcurrent.md",
-      "sha256": "887314935e3773a3c0d301433f9332e3ee996eba8d5462da36bb908669b5e3d7"
+      "path": "backlog/010-use-requires-occupancy.md",
+      "sha256": "668374db5bdff510c1c97b2697bdcb68d53991ab78f122ab1bc30b84413e0a30"
     },
     {
-      "path": "backlog/011-use-requires-occupancy.md",
-      "sha256": "960794bdae9565729b5dc8e7ac0ff09978534611e6c867a53786209c8075caa6"
+      "path": "backlog/011-ownership-and-use-test.md",
+      "sha256": "aed463d33c12fc05a50c05f1e054511d493b81f2707a5317be219d7447205c73"
     },
     {
-      "path": "backlog/012-ownership-and-use-test.md",
-      "sha256": "f0fdf48b37bbce06b97507a6e509ebfb6ebe9aa814a95ee5211e94047bf73f79"
+      "path": "backlog/012-exclusion-of-gain.md",
+      "sha256": "6148d6b442cbad775d9324965ccedcf1131f901695d7eadf078a65753101ea80"
     },
     {
-      "path": "backlog/013-exclusion-of-gain.md",
-      "sha256": "6d15511e47fe58fa45020dda8e3630dbafb0729ce9dac3c1603cf36ef24adc4b"
+      "path": "backlog/013-short-temporary-absences.md",
+      "sha256": "39c8f29552a46a654a776f0069be54467f8246917134bb3928120e86ca17cde6"
     },
     {
-      "path": "backlog/014-short-temporary-absences.md",
-      "sha256": "c340d01cd70c3fa4285aa5a3eddfb00b8101948d767f1a5255ec18c71552d358"
+      "path": "backlog/014-out-of-residence-care.md",
+      "sha256": "af45e64f8eb4e149c614ac70716a435e67cbf1e6c4931288a9f5833062dc2081"
     },
     {
-      "path": "backlog/015-out-of-residence-care.md",
-      "sha256": "2757c9cb1f825d1a80cbda7fba205841a2f748761ac3a7355a50d38fa7802ae9"
+      "path": "backlog/015-allocation-required.md",
+      "sha256": "40138f45167034f1318e0efedbf01fe08c9b686967dfa06574162716cee2598e"
     },
     {
-      "path": "backlog/016-allocation-required.md",
-      "sha256": "cfac1f2dfa6a8a54222abe7e0c2dbe38ae68a4ec643fa7036c9f344ede53c976"
+      "path": "backlog/016-depreciation-excludes-allocated-portion.md",
+      "sha256": "79a34602b4fcafe4b151530f9a28dbcbcb744ac57e9a35c8d4b9fd51862bd1aa"
     },
     {
-      "path": "backlog/017-depreciation-excludes-allocated-portion.md",
-      "sha256": "9b1c674726c47180f1924366f5ad95f45fece1015f840f57824c898ab2824643"
+      "path": "backlog/017-no-allocation-within-dwelling-unit.md",
+      "sha256": "bc988c5732ddc9612a8bf3118ca88bfe71df5b33243122bbcfd36a6b660e8f61"
     },
     {
-      "path": "backlog/018-no-allocation-within-dwelling-unit.md",
-      "sha256": "65d0762cca77310f4aa8881371b44ea49247f3a1754e272c16543ab165af23e9"
+      "path": "backlog/018-allocation-subject-to-depreciation.md",
+      "sha256": "f04cb73720261321140738ca8d88fd8500d259d5ef248e6400edcc3bcb34a3e7"
     },
     {
-      "path": "backlog/019-allocation-subject-to-depreciation.md",
-      "sha256": "f8cf6cad24fc7ba3083b0c82c550532e3ef992fd8169ce3ca6efb86b0cbda45a"
-    },
-    {
-      "path": "backlog/020-method-of-allocation.md",
-      "sha256": "096d432bb3f64fde1f9721f907d2103f6e9d26c633afec9b469cb51ca1b802b8"
+      "path": "backlog/019-method-of-allocation.md",
+      "sha256": "1c7a1766a3c40aba78acdd5c68093a83e53dc1c4b908a0136250ef8a43111f8f"
     },
     {
       "path": "backlog/README.md",
-      "sha256": "cf24224fbfe8bea756a1e6be52b99f04a451783ca7fc18012fd40ba45b2b7376"
+      "sha256": "73018c0f1bcdeed69da72d7e65ebb017c72d131d1a99e894025190f1cf31e635"
     },
     {
       "path": "corpus/section-1.121-1.xml",
@@ -335,7 +331,7 @@
     },
     {
       "path": "src/Tax121PrincipalResidence/Generated/Contracts.g.cs",
-      "sha256": "4ef065c184cc18152ab526e82964fadadb828bff2e0744a5a70ef53ac3167790"
+      "sha256": "7337858126a7f9e2b775e97b09c6e20290cfe6676378d6323d6846958e93f7af"
     },
     {
       "path": "src/Tax121PrincipalResidence/Generated/MapEntries.g.cs",
@@ -347,7 +343,7 @@
     },
     {
       "path": "src/Tax121PrincipalResidence/Generated/Registry.g.cs",
-      "sha256": "91ac4078c741d73104b5b1920705c7cc2d21d72ef4919af3c4c5b614ccf8d544"
+      "sha256": "4a4f14fa5b218f6a67a8924c1585089d1bbf110e059b6fbca40c4a5fb733ba8d"
     },
     {
       "path": "src/Tax121PrincipalResidence/Generated/Requests.g.cs",
@@ -355,7 +351,7 @@
     },
     {
       "path": "tests/Tax121PrincipalResidence.Tests/Generated/CorrespondenceTests.g.cs",
-      "sha256": "ffa0e6faf9bbf1debfa9096eb3556a36d2c265289b153d9151ce7319d44b9f6b"
+      "sha256": "7ef8ae639608e39b22647bf6c96d2b3d536fccbb3787104b2cbd41af84a176b1"
     },
     {
       "path": "tests/Tax121PrincipalResidence.Tests/Generated/ProvenanceTests.g.cs",
@@ -546,7 +542,7 @@
     },
     {
       "path": "corpus-map.overlay.json",
-      "sha256": "92530aa0ad688259b752cc46ddcbbbc17b3733c94951bbfced46edbb257b0982"
+      "sha256": "5e0fe538b90226e4fc6df5cb2b99b3a46f6a8fbe2fe5fcde8bebd4bb144ac839"
     },
     {
       "path": "src/Tax121PrincipalResidence/Tax121PrincipalResidence.csproj",
