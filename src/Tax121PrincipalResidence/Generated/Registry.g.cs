@@ -139,7 +139,7 @@ public static class Registry
     [
         new("exclusion-of-gain", EntryStatus.Mapped, CorrespondenceRow.NotBuilt, [MapEntries.ExclusionOfGain.Locator]),
         new("ownership-and-use-test", EntryStatus.Mapped, CorrespondenceRow.NotBuilt, [MapEntries.OwnershipAndUseTest.Locator]),
-        new("residence-facts-and-circumstances", EntryStatus.Mapped, CorrespondenceRow.NotBuilt, [MapEntries.ResidenceFactsAndCircumstances.Locator]),
+        new("residence-facts-and-circumstances", EntryStatus.Implemented, CorrespondenceRow.UnresolvedAmbiguity, [MapEntries.ResidenceFactsAndCircumstances.Locator]),
         new("residence-may-include", EntryStatus.Mapped, CorrespondenceRow.NotBuilt, [MapEntries.ResidenceMayInclude.Locator]),
         new("residence-cooperative-apartment", EntryStatus.Mapped, CorrespondenceRow.NotBuilt, [MapEntries.ResidenceCooperativeApartment.Locator]),
         new("residence-excludes-personal-property", EntryStatus.Mapped, CorrespondenceRow.NotBuilt, [MapEntries.ResidenceExcludesPersonalProperty.Locator]),
