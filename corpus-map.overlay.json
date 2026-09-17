@@ -39,5 +39,30 @@
         "mutation": "Applicability.Gate defaulted a missing date to the effective date (`saleOrExchangeDate ?? ApplicableFrom` for `?? throw new ArgumentException(...)`), so a missing date proceeded; this test went red. It went red too with the refusal's ParamName `\"saleOrExchangeDate\"` for `nameof(Requests.EffectiveDateRequest.SaleOrExchangeDate)`, and with the gated entry's id dropped from its message."
       }
     ]
+  },
+  "residence-may-include": {
+    "status": "implemented",
+    "implementedIn": {
+      "ruleset": "tax-121-principal-residence",
+      "version": 1
+    },
+    "tests": [
+      {
+        "test": "ResidenceMayIncludeEntryPointTests.A_sale_on_24_December_2002_resolves_a_houseboat_and_a_house_trailer_as_printed_citing_1_121_1_b",
+        "mutation": "PropertyThatMayBeAResidence listed only the houseboat (`[ResidencePropertyKind.Houseboat]` for `[ResidencePropertyKind.Houseboat, ResidencePropertyKind.HouseTrailer]`); this test went red. It went red too with the two in the other order, with a third kind appended (`(ResidencePropertyKind)2`, where the co-operative apartment would go), with AsPrinted giving `\"a trailer\"` for `\"a house trailer\"`, with Authority citing effective-date's `§ 1.121-1(f)` (`MapEntries.EffectiveDate.Locator` for `MapEntries.ResidenceMayInclude.Locator`), and with Handlers.ResidenceMayInclude gating every dated request as though it were 2002-12-23 (`Applicability.ApplicableFrom.AddDays(-1)` for `request.SaleOrExchangeDate`). Citing residence-cooperative-apartment's locator (`MapEntries.ResidenceCooperativeApartment.Locator`) did NOT turn it red: both entries cite `§ 1.121-1(b)`, so the locator cannot tell them apart."
+      },
+      {
+        "test": "ResidenceMayIncludeEntryPointTests.A_sale_on_23_December_2002_declines_OutsideCurrentScope_citing_1_121_1_f",
+        "mutation": "Handlers.ResidenceMayInclude skipped the gate for a dated request (`(request.SaleOrExchangeDate is null ? Applicability.Gate(MapEntries.ResidenceMayInclude, null) : null)` for `Applicability.Gate(MapEntries.ResidenceMayInclude, request.SaleOrExchangeDate)`), so a sale on 2002-12-23 resolved the list; this test went red. It went red too with the gate passed effective-date's entry instead of its own (`MapEntries.EffectiveDate` for `MapEntries.ResidenceMayInclude`), so the decline did not name 'residence-may-include'."
+      },
+      {
+        "test": "ResidenceMayIncludeEntryPointTests.Without_a_sale_or_exchange_date_it_refuses_rather_than_assume_one",
+        "mutation": "Handlers.ResidenceMayInclude defaulted a missing date to the effective date (`request.SaleOrExchangeDate ?? Applicability.ApplicableFrom` for `request.SaleOrExchangeDate`), so a request with no date resolved the list; this test went red."
+      },
+      {
+        "test": "ResidenceMayIncludeEntryPointTests.The_dictionary_dispatch_carries_no_date_and_refuses_the_same_way",
+        "mutation": "Handlers.ResidenceMayInclude defaulted a missing date to the effective date (`request.SaleOrExchangeDate ?? Applicability.ApplicableFrom` for `request.SaleOrExchangeDate`), so `Registry.Resolve(\"residence-may-include\", RuleRequest.Empty)` resolved the list; this test went red."
+      }
+    ]
   }
 }
